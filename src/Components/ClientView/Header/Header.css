@@ -1,0 +1,176 @@
+/* Dentro de src/Components/ClientView/Header/Header.css */
+
+.header-container {
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative; /* Necessário para o posicionamento do menu mobile */
+    z-index: 2000; /* Garante que o header fique acima de tudo */
+}
+
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px; /* Reduzi um pouco o padding vertical */
+}
+
+.header-side-placeholder, .header-right {
+    flex: 1;
+}
+
+.header-center {
+    flex-shrink: 0;
+}
+
+.header-logo {
+    height: 58px; /* Reduz um pouco o tamanho da logo */
+    object-fit: contain;
+    display: block;
+    padding-right: 30px;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.platform-button-desktop {
+    background-color: #122C4F;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.platform-button-desktop:hover {
+    background-color: #1a3c6d;
+}
+
+/* --- Navegação de Desktop --- */
+.header-nav-desktop {
+    background-color: #FFFFFF; 
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    border-top: solid 1.1px #eee;
+    border-bottom: solid 1px #eee;
+}
+
+.header-nav-desktop ul {
+    display: flex;
+    list-style: none;
+    gap: 70px; 
+}
+
+.header-nav-desktop a {
+    font-family: 'Helnore', serif; 
+    font-weight: normal;
+    font-size: 1.3em;
+    color: #122C4F;
+    text-decoration: none;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+.header-nav-desktop a::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 2px;
+    background-color: #122C4F;
+    bottom: 0; left: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.header-nav-desktop a:hover::after {
+    transform: scaleX(1);
+}
+
+/* --- ESTILOS PARA MOBILE --- */
+.hamburger-button { /* Botão Hambúrguer */
+    display: none; /* Escondido por padrão */
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    color: #122C4F;
+    cursor: pointer;
+}
+
+.mobile-nav-overlay { /* O menu que cobre a tela */
+    position: fixed;
+    top: 80px; /* A altura da .header-top-row */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px); /* Ocupa o resto da tela */
+    background-color: #FFFFFF;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    /* Estado inicial (escondido) */
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mobile-nav-overlay.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Torna o menu clicável */
+}
+
+.mobile-nav-overlay ul {
+    list-style: none;
+    text-align: center;
+}
+
+.mobile-nav-overlay li {
+    margin-bottom: 40px;
+}
+
+.mobile-nav-overlay a {
+    font-family: 'Helnore', serif; 
+    font-size: 2.5em; /* Fonte grande para impacto */
+    color: #122C4F;
+    text-decoration: none;
+}
+
+.platform-button-mobile {
+    background-color: #122C4F;
+    color: #FFFFFF;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* --- Media Query para Ativar o Modo Responsivo --- */
+@media (max-width: 900px) {
+    /* Esconde a navegação e o botão de desktop */
+    .header-nav-desktop, .platform-button-desktop {
+        display: none;
+    }
+    
+    /* Mostra o botão hambúrguer */
+    .hamburger-button {
+        display: block;
+    }
+
+    .header-top-row {
+        padding: 15px 20px; /* Menor padding em telas pequenas */
+    }
+}

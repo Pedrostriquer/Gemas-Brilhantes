@@ -1,0 +1,130 @@
+/* Dentro de src/Components/ClientView/Body/GemCash/IntroSection/IntroSection.css */
+
+.intro-section-wrapper {
+    padding: 70px 20px;
+    background-color: #f0f2f5;
+}
+
+.intro-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* --- Coluna Esquerda: Texto Fixo --- */
+.intro-fixed-text-col {
+    flex: 1;
+    max-width: 450px;
+}
+
+.intro-title {
+    margin-bottom: 20px;
+    font-size: 3em;
+    font-weight: normal;
+    color: #122C4F;
+    line-height: 1.2;
+    font-family: 'Helnore', serif;
+    color: #122C4F;
+}
+
+.intro-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    color: #000000;
+    line-height: 1.7;
+    /* font-weight: normal; */
+
+}
+
+/* --- Coluna Direita: Card com Vídeo --- */
+.intro-video-card-col {
+    flex: 1;
+}
+
+.video-card {
+    position: relative;
+    width: 100%;
+    /* Proporção 16:9 para o vídeo */
+    padding-top: 56.25%; 
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.intro-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que o vídeo cubra todo o card */
+}
+
+/* Overlay para o conteúdo sobreposto */
+.video-overlay-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinha o conteúdo na parte de baixo */
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    /* Gradiente sutil para garantir legibilidade do texto */
+    background: linear-gradient(to top, rgba(18,44,79,0.7) 0%, rgba(0,0,0,0) 70%);
+}
+
+.overlay-text {
+    color: #FFFFFF;
+    /* Estado inicial da animação */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.3s ease-out, transform 1.3s ease-out;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Estado final da animação */
+.overlay-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.overlay-title {
+    font-family: 'Helnore', serif;
+    font-size: 1.8em;
+    font-weight: normal;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.overlay-button {
+    background-color: #FFFFFF;
+    color: #122C4F;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.overlay-button:hover {
+    transform: scale(1.05);
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .intro-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .intro-fixed-text-col {
+        max-width: 100%;
+    }
+}

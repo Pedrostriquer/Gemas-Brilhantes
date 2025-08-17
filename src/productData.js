@@ -1,0 +1,26 @@
+// Dentro de src/productData.js
+
+// Este arquivo serve como nosso "banco de dados" temporário.
+// No futuro, isso será substituído por uma chamada ao Firebase.
+
+export const allProducts = [
+    // Ouro Amarelo
+    { id: 1, name: 'Anel Solitaire Radiante', price: 7800, category: 'Anel', description: 'Um clássico anel de noivado com um diamante central solitário de corte brilhante, montado em um aro de ouro amarelo 18k. Uma peça que exalta a pureza e o brilho eterno do amor.', image: "/img/ECLST12368__67147.1752295168.1280.1280.webp", metal: 'Ouro Amarelo', gemstone: 'Diamante', onSale: true },
+    { id: 8, name: 'Brincos Argola de Ouro', price: 3100, category: 'Brinco', description: 'Brincos de argola clássicos em ouro amarelo 18k com acabamento polido. Uma peça versátil e indispensável no porta-joias de qualquer mulher elegante.', image: '/img/products/brinco-02.jpg', metal: 'Ouro Amarelo', gemstone: 'N/A', onSale: false },
+    { id: 9, name: 'Pulseira Elo Português', price: 4800, category: 'Pulseira', description: 'Pulseira robusta e atemporal com design de elo português em ouro maciço 18k, equipada com um fecho de segurança resistente.', image: '/img/products/pulseira-02.jpg', metal: 'Ouro Amarelo', gemstone: 'N/A', onSale: false },
+    { id: 14, name: 'Anel Chevron Minimalista', price: 2900, category: 'Anel', description: 'Anel delicado em formato de V (chevron) em ouro amarelo 18k, perfeito para ser usado sozinho para um look minimalista ou em conjunto com outras alianças.', image: '/img/products/anel-05.jpg', metal: 'Ouro Amarelo', gemstone: 'N/A', onSale: true },
+    // Ouro Branco
+    { id: 2, name: 'Colar Gota de Esmeralda', price: 12500, category: 'Colar', description: 'Deslumbrante colar com uma esmeralda colombiana em formato de gota, pesando 2.5 quilates, suspensa por uma delicada corrente de ouro branco 18k.', image: '/img/products/colar-01.jpg', metal: 'Ouro Branco', gemstone: 'Esmeralda', onSale: false },
+    { id: 3, name: 'Brincos Leque de Diamantes', price: 9200, category: 'Brinco', description: 'Brincos elegantes em formato de leque, cravejados com 32 diamantes de lapidação brilhante que capturam a luz a cada movimento.', image: '/img/products/brinco-01.jpg', metal: 'Ouro Branco', gemstone: 'Diamante', onSale: false },
+    { id: 4, name: 'Pulseira Riviera de Safiras', price: 15300, category: 'Pulseira', description: 'Pulseira sofisticada estilo riviera, composta por uma fileira contínua de safiras azuis intensas, totalizando 5 quilates, em ouro branco 18k.', image: '/img/products/pulseira-01.jpg', metal: 'Ouro Branco', gemstone: 'Safira', onSale: false },
+    { id: 11, name: 'Anel de Formatura em Safira', price: 7100, category: 'Anel', description: 'Anel de formatura tradicional em ouro branco 18k, com uma safira central representando a sabedoria e emblemas do curso nas laterais.', image: '/img/products/anel-04.jpg', metal: 'Ouro Branco', gemstone: 'Safira', onSale: false },
+    { id: 15, name: 'Colar Choker de Diamantes', price: 21500, category: 'Colar', description: 'Uma choker deslumbrante e flexível, inteiramente cravejada com diamantes de alta pureza para um visual de alto impacto e luxo.', image: '/img/products/colar-04.jpg', metal: 'Ouro Branco', gemstone: 'Diamante', onSale: false },
+    // Ouro Rosé
+    { id: 5, name: 'Anel Trindade de Turmalina', price: 6500, category: 'Anel', description: 'Anel arrojado e moderno em ouro rosé 18k, com três turmalinas Paraíba em tons neon, simbolizando o passado, presente e futuro.', image: '/img/products/anel-02.jpg', metal: 'Ouro Rosé', gemstone: 'Turmalina', onSale: true },
+    { id: 10, name: 'Colar Relicário Secreto', price: 8800, category: 'Colar', description: 'Um relicário de design vitoriano em ouro rosé 18k que guarda um segredo: um pequeno diamante de 0.05 quilates em seu interior.', image: '/img/products/colar-03.jpg', metal: 'Ouro Rosé', gemstone: 'Diamante', onSale: false },
+    { id: 12, name: 'Brincos de Pérola Barroca', price: 6700, category: 'Brinco', description: 'Brincos únicos e artísticos com pérolas barrocas naturais de água doce, montadas em uma base de ouro rosé que celebra a beleza da imperfeição.', image: '/img/products/brinco-03.jpg', metal: 'Ouro Rosé', gemstone: 'Pérola', onSale: false },
+    // Outros
+    { id: 6, name: 'Colar Ponto de Luz Imperial', price: 4200, category: 'Colar', description: 'Um colar minimalista e sofisticado com um único diamante de lapidação brilhante de 0.50 quilates em um ponto de luz de ouro branco.', image: '/img/products/colar-02.jpg', metal: 'Ouro Branco', gemstone: 'Diamante', onSale: false },
+    { id: 7, name: 'Anel Aliança Eterna', price: 5900, category: 'Anel', description: 'Meia aliança em ouro branco cravejada de diamantes, perfeita para celebrar momentos inesquecíveis ou para compor um mix de anéis.', image: '/img/products/anel-03.jpg', metal: 'Ouro Branco', gemstone: 'Diamante', onSale: true },
+    { id: 13, name: 'Pulseira com Berloques de Luxo', price: 11200, category: 'Pulseira', description: 'Pulseira personalizável em ouro amarelo com berloques temáticos (sorte, amor, viagem) cravejados de pequenas gemas preciosas.', image: '/img/products/pulseira-03.jpg', metal: 'Ouro Amarelo', gemstone: 'Misto', onSale: false },
+];
