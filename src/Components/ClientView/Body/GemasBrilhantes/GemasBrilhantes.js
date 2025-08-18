@@ -1,71 +1,149 @@
 // Dentro de src/Components/ClientView/Body/GemasBrilhantes/GemasBrilhantes.js
 
 import React, { useState, useEffect } from 'react';
+import { db } from '../../../../firebase/config';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import './GemasBrilhantes.css';
 import ProductCard from './ProductCard';
 import FilterSidebar from './FilterSidebar';
-import { allProducts } from '../../../../productData'; // 1. IMPORTA os dados
-
-
 
 const GemasBrilhantes = () => {
-    const [products, setProducts] = useState(allProducts);
-    // ADICIONADO: Estado para o termo de busca
-    const [searchTerm, setSearchTerm] = useState(''); 
-    const [filters, setFilters] = useState({
-        category: 'Todas',
-        metal: 'Todos',
-        gemstone: 'Todas',
-        onSale: false,
-    });
+    // Estados para os dados brutos do Firebase
+    const [allProducts, setAllProducts] = useState([]);
+    const [attributeGroups, setAttributeGroups] = useState([]);
+    const [attributeValues, setAttributeValues] = useState({});
+    
+    // Estados para controle da UI e filtros
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [filters, setFilters] = useState({});
+    const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    // Estado para controlar o modal de filtros no mobile
     const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
+    // Efeito para buscar todos os dados necessários do Firestore uma única vez
     useEffect(() => {
-        let filtered = [...allProducts];
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                // 1. Buscar Todos os Produtos
+                const productsSnapshot = await getDocs(collection(db, 'products'));
+                const productsData = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setAllProducts(productsData);
 
-        // Aplica filtros da sidebar
-        if (filters.category !== 'Todas') filtered = filtered.filter(p => p.category === filters.category);
-        if (filters.metal !== 'Todos') filtered = filtered.filter(p => p.metal === filters.metal);
-        if (filters.gemstone !== 'Todas') filtered = filtered.filter(p => p.gemstone === filters.gemstone);
-        if (filters.onSale) filtered = filtered.filter(p => p.onSale);
+                // 2. Buscar Grupos de Atributos que se aplicam a 'gema'
+                const q = query(collection(db, 'attributes'), where('appliesTo', '==', 'gema'));
+                const groupsSnapshot = await getDocs(q);
+                const groupsData = groupsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setAttributeGroups(groupsData);
+                
+                // 3. Buscar os Valores para cada Grupo
+                const valuesMap = {};
+                for (const group of groupsData) {
+                    const valuesSnapshot = await getDocs(collection(db, 'attributes', group.id, 'values'));
+                    valuesMap[group.id] = valuesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                }
+                setAttributeValues(valuesMap);
 
-        // ADICIONADO: Aplica filtro do campo de busca
+            } catch (error) {
+                console.error("Erro ao buscar dados da loja:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // Efeito para aplicar filtros sempre que algo mudar
+    useEffect(() => {
+        let items = allProducts.filter(p => p.type === 'gema');
+
+        // Lógica de filtro de atributos
+        Object.keys(filters).forEach(groupId => {
+            const valueId = filters[groupId];
+            if (valueId && valueId !== 'all') {
+                items = items.filter(product => product.attributes?.[groupId] === valueId);
+            }
+        });
+        
+        // Lógica de busca por nome
         if (searchTerm) {
-            filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+            items = items.filter(product => product.name.toLowerCase().includes(searchTerm.toLowerCase()));
         }
 
-        // Aplica ordenação
-        if (sortOrder === 'asc') filtered.sort((a, b) => a.price - b.price);
-        else if (sortOrder === 'desc') filtered.sort((a, b) => b.price - a.price);
+        // Lógica de ordenação
+        if (sortOrder === 'asc') items.sort((a, b) => a.price - b.price);
+        else if (sortOrder === 'desc') items.sort((a, b) => b.price - a.price);
         
-        setProducts(filtered);
+        setFilteredProducts(items);
 
-    }, [filters, sortOrder, searchTerm]); // Adicionado searchTerm às dependências
+    }, [filters, searchTerm, sortOrder, allProducts]);
 
-    const handleFilterChange = (filterName, value) => {
-        setFilters(prevFilters => ({ ...prevFilters, [filterName]: value }));
+    const handleFilterChange = (groupId, valueId) => {
+        setFilters(prev => ({ ...prev, [groupId]: valueId }));
     };
 
     return (
         <div className="store-page-wrapper">
-             {/* REMOVIDO: O <div className="store-header"> foi retirado daqui */}
-            
             <div className="store-body">
-                <FilterSidebar allProducts={allProducts} onFilterChange={handleFilterChange} />
+                {/* Sidebar para Desktop */}
+                <div className="sidebar-desktop-wrapper">
+                    {loading ? (
+                        <div className="sidebar-loading">Carregando filtros...</div>
+                    ) : (
+                        <FilterSidebar 
+                            attributeGroups={attributeGroups} 
+                            attributeValues={attributeValues} 
+                            onFilterChange={handleFilterChange}
+                        />
+                    )}
+                </div>
+
+                {/* Modal de filtros para Mobile */}
+                <div 
+                    className={`sidebar-mobile-modal ${isMobileFiltersOpen ? 'open' : ''}`}
+                    onClick={() => setIsMobileFiltersOpen(false)} // Fecha ao clicar no fundo
+                >
+                    <div className="sidebar-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="sidebar-title fonte-principal">Filtros</h3>
+                            <button onClick={() => setIsMobileFiltersOpen(false)} className="close-modal-btn">&times;</button>
+                        </div>
+                        <div className="modal-body">
+                            {loading ? (
+                                <div className="sidebar-loading">Carregando...</div>
+                            ) : (
+                                <FilterSidebar 
+                                    attributeGroups={attributeGroups} 
+                                    attributeValues={attributeValues} 
+                                    onFilterChange={handleFilterChange}
+                                />
+                            )}
+                        </div>
+                        <div className="modal-footer">
+                            <button className="apply-filters-btn" onClick={() => setIsMobileFiltersOpen(false)}>
+                                Ver Resultados
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 
                 <main className="product-main-content">
                     <div className="content-header">
-                        {/* ADICIONADO: O novo input de busca */}
                         <input
                             type="text"
-                            placeholder="Buscar por sua joia..."
+                            placeholder="Buscar por sua gema..."
                             className="store-search-input"
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        
+                        <button className="mobile-filter-button" onClick={() => setIsMobileFiltersOpen(true)}>
+                            <i className="fas fa-filter"></i>
+                            <span>Filtrar</span>
+                        </button>
                         <div className="header-controls">
-                            <span className="results-count">{products.length} resultados</span>
+                            <span className="results-count">{filteredProducts.length} resultados</span>
                             <select className="sort-select" onChange={(e) => setSortOrder(e.target.value)}>
                                 <option value="">Ordenar por</option>
                                 <option value="asc">Menor Preço</option>
@@ -73,14 +151,17 @@ const GemasBrilhantes = () => {
                             </select>
                         </div>
                     </div>
-
-                    <div className="product-grid">
-                        {products.length > 0 ? (
-                            products.map(product => <ProductCard key={product.id} product={product} />)
-                        ) : (
-                            <p className="no-products-found">Nenhum produto encontrado.</p>
-                        )}
-                    </div>
+                     {loading ? (
+                        <p className="loading-products">Carregando produtos...</p>
+                    ) : (
+                        <div className="product-grid">
+                            {filteredProducts.length > 0 ? (
+                                filteredProducts.map(product => <ProductCard key={product.id} product={product} />)
+                            ) : (
+                                <p className="no-products-found">Nenhuma gema encontrada com os filtros selecionados.</p>
+                            )}
+                        </div>
+                    )}
                 </main>
             </div>
         </div>

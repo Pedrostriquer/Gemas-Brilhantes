@@ -1,0 +1,137 @@
+.attributes-container h1 {
+    font-family: 'Helnore', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #122C4F;
+    margin-bottom: 20px;
+}
+
+.product-type-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.product-type-tabs button {
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    color: #555;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.product-type-tabs button:hover {
+    color: #122C4F;
+}
+
+.product-type-tabs button.active {
+    color: #122C4F;
+    border-bottom-color: #122C4F;
+}
+
+.attributes-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.attribute-column {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.attribute-column h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.attribute-list {
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.attribute-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.attribute-item.value-item {
+    cursor: default;
+}
+
+.attribute-item:hover {
+    background-color: #f1f3f5;
+}
+
+.attribute-item.active {
+    background-color: #122c4f1a;
+    color: #122C4F;
+    font-weight: 500;
+    box-shadow: inset 0 0 0 2px #122C4F;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.4em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.delete-btn:hover {
+    color: #c0392b;
+}
+
+.add-form {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+}
+
+.add-form input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.add-form button {
+    background-color: #122C4F;
+    color: #fff;
+    border: none;
+    padding: 0 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.add-form button:hover {
+    background-color: #1a3c6d;
+}

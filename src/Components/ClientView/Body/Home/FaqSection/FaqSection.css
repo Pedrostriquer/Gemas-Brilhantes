@@ -15,7 +15,10 @@
     color: #122C4F;
     font-size: 2.5em;
     font-weight: normal;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+    font-family: 'Helnore', serif;
+    text-transform: uppercase;
+    word-spacing: 4px;
 }
 
 .faq-accordion {

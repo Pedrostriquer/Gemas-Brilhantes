@@ -1,0 +1,6 @@
+/* Em src/Components/Admin/AdminBody/ManageProducts/Pagination.css */
+.pagination-nav{display:flex;justify-content:center;margin-top:30px}
+.pagination-list{display:flex;list-style:none;padding:0;gap:8px}
+.page-link{background-color:#fff;border:1px solid #ddd;color:#122C4F;padding:8px 14px;cursor:pointer;border-radius:6px;transition:all .3s ease;font-family:'Poppins',sans-serif;font-weight:500}
+.page-link:hover{background-color:#f8f9fa;border-color:#122C4F}
+.page-link.active{background-color:#122C4F;color:#fff;border-color:#122C4F}

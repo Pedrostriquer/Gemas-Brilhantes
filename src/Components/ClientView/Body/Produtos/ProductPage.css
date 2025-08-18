@@ -1,8 +1,14 @@
-/* Em src/Components/ClientView/Body/Produtos/ProductPage.css */
+/* Dentro de src/Components/ClientView/Body/Produtos/ProductPage.css */
 
 .product-page-wrapper {
     background-color: #FFFFFF;
     padding: 80px 40px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .product-page-container {
@@ -14,27 +20,62 @@
     align-items: flex-start;
 }
 
-.product-image-container img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+/* --- Galeria de Mídia --- */
+.product-media-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
+.main-media-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Garante um contêiner quadrado para a mídia principal */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    background-color: #f8f9fa;
+}
+
+.main-media-item {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Permite que as miniaturas quebrem a linha se necessário */
+}
+
+.thumbnail-item {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.thumbnail-item:hover {
+    border-color: #ddd;
+}
+
+.thumbnail-item.active {
+    border-color: #122C4F;
+}
+
+.thumbnail-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- Detalhes do Produto --- */
 .product-details-container {
     display: flex;
     flex-direction: column;
-}
-
-.product-page-category {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9em;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
 }
 
 .product-page-title {
@@ -59,6 +100,7 @@
     color: #555;
     line-height: 1.8;
     margin-bottom: 40px;
+    white-space: pre-wrap; /* Respeita quebras de linha na descrição */
 }
 
 .buy-button {
@@ -74,6 +116,7 @@
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: flex-start; /* Impede que o botão estique */
 }
 
 .buy-button:hover {
@@ -81,9 +124,24 @@
     transform: translateY(-3px);
 }
 
-.product-not-found {
+/* --- Mensagens de Estado --- */
+.page-loading-message, .product-not-found {
     text-align: center;
     padding: 100px 40px;
+    font-family: 'Poppins', sans-serif;
+}
+.product-not-found h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+.back-to-store-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #122C4F;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 2px solid #122C4F;
+    padding-bottom: 3px;
 }
 
 /* Responsividade */

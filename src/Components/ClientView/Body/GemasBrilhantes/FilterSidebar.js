@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import './FilterSidebar.css';
 
-// Componente para uma seção de filtro que pode ser expandida/recolhida
 const FilterSection = ({ title, children }) => {
     const [isOpen, setIsOpen] = useState(true);
     return (
@@ -12,55 +11,48 @@ const FilterSection = ({ title, children }) => {
                 <span>{title}</span>
                 <i className={`fas fa-chevron-down ${isOpen ? 'open' : ''}`}></i>
             </button>
-            <div className={`section-content ${isOpen ? 'open' : ''}`}>
-                {children}
-            </div>
+            <div className={`section-content ${isOpen ? 'open' : ''}`}>{children}</div>
         </div>
     );
 };
 
-const FilterSidebar = ({ allProducts, onFilterChange }) => {
-    const categories = ['Todas', ...new Set(allProducts.map(p => p.category))];
-    const metals = ['Todos', ...new Set(allProducts.map(p => p.metal))];
-    const gemstones = ['Todas', ...new Set(allProducts.map(p => p.gemstone).filter(g => g !== 'N/A'))];
-
+// O componente agora recebe os grupos de atributos e seus valores
+const FilterSidebar = ({ attributeGroups, attributeValues, onFilterChange }) => {
     return (
         <aside className="filter-sidebar">
-            <h3 className="sidebar-title">Filtros</h3>
+            <h3 className="sidebar-title fonte-principal">Filtros</h3>
             
-            <FilterSection title="Tipo de Joia">
-                {categories.map(cat => (
-                    <div key={cat} className="radio-option">
-                        <input type="radio" id={cat} name="category" value={cat} defaultChecked={cat === 'Todas'} onChange={e => onFilterChange('category', e.target.value)} />
-                        <label htmlFor={cat}>{cat}</label>
+            {/* Itera sobre os grupos de atributos (ex: Cor, Metal) */}
+            {attributeGroups.map(group => (
+                <FilterSection key={group.id} title={group.name}>
+                    <div className="radio-option">
+                        <input 
+                            type="radio" 
+                            id={`all-${group.id}`} 
+                            name={group.id} 
+                            value="all" 
+                            defaultChecked 
+                            onChange={() => onFilterChange(group.id, 'all')} 
+                        />
+                        <label htmlFor={`all-${group.id}`}>Todos</label>
                     </div>
-                ))}
-            </FilterSection>
-
-            <FilterSection title="Cor do Metal">
-                {metals.map(metal => (
-                    <div key={metal} className="radio-option">
-                        <input type="radio" id={metal} name="metal" value={metal} defaultChecked={metal === 'Todos'} onChange={e => onFilterChange('metal', e.target.value)} />
-                        <label htmlFor={metal}>{metal}</label>
-                    </div>
-                ))}
-            </FilterSection>
-
-            <FilterSection title="Gema Principal">
-                 {gemstones.map(gem => (
-                    <div key={gem} className="radio-option">
-                        <input type="radio" id={gem} name="gemstone" value={gem} defaultChecked={gem === 'Todas'} onChange={e => onFilterChange('gemstone', e.target.value)} />
-                        <label htmlFor={gem}>{gem}</label>
-                    </div>
-                ))}
-            </FilterSection>
-
-            <FilterSection title="Ofertas Especiais">
-                <div className="checkbox-option">
-                    <input type="checkbox" id="onSale" onChange={e => onFilterChange('onSale', e.target.checked)} />
-                    <label htmlFor="onSale">Em oferta</label>
-                </div>
-            </FilterSection>
+                    {/* Itera sobre os valores de cada grupo (ex: Ouro, Prata) */}
+                    {attributeValues[group.id]?.map(value => (
+                        <div key={value.id} className="radio-option">
+                            <input 
+                                type="radio" 
+                                id={value.id} 
+                                name={group.id} 
+                                value={value.id} 
+                                onChange={() => onFilterChange(group.id, value.id)} 
+                            />
+                            <label htmlFor={value.id}>{value.name}</label>
+                        </div>
+                    ))}
+                </FilterSection>
+            ))}
+            
+            {/* A seção de PROMOÇÃO foi REMOVIDA daqui */}
         </aside>
     );
 };
