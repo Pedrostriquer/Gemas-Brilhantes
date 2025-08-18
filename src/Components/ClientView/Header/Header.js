@@ -9,7 +9,8 @@ const Header = () => {
 
     const menuItems = [
         { name: 'HOME', path: '/home' },
-        { name: 'GEMAS BRILHANTES', path: '/gemas-brilhantes' },
+        { name: 'GEMAS PRECIOSAS', path: '/gemas-brilhantes' }, // Esta será a página de Gemas
+        { name: 'JOIAS', path: '/joias' }, // A nova página de Joias
         { name: 'GEMCASH', path: '/gemcash' },
     ];
 

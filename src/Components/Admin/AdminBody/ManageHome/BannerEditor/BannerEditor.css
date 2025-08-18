@@ -1,0 +1,174 @@
+/* Dentro de src/Components/Admin/AdminBody/ManageHome/BannerEditor/BannerEditor.css */
+
+.banner-editor-wrapper {
+    font-family: 'Poppins', sans-serif;
+}
+
+.editor-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.editor-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-group label {
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.control-group input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.control-group span {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+}
+
+.control-group.checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto; /* Alinha na parte de baixo do grid */
+}
+
+.slides-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.slides-editor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.slide-editor-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.slide-preview {
+    width: 150px;
+    height: 80px;
+    flex-shrink: 0;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.slide-preview img, .slide-preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.slide-inputs {
+    display: flex;
+    flex-grow: 1;
+    gap: 10px;
+    align-items: center;
+}
+
+.slide-inputs .hidden-file-input {
+    display: none;
+}
+
+.slide-inputs .upload-btn {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.slide-inputs .link-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.slide-inputs .remove-btn {
+    background-color: #fbeaea;
+    color: #c0392b;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.editor-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.add-slide-btn, .save-btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.add-slide-btn {
+    background-color: #e0e7ff;
+    color: #4338ca;
+    border: none;
+}
+
+.save-btn {
+    background-color: #122C4F;
+    color: #FFFFFF;
+    border: none;
+}
+
+.save-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}

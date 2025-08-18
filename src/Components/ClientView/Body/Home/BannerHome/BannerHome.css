@@ -1,0 +1,73 @@
+/* Dentro de src/Components/ClientView/Body/Home/BannerHome/BannerHome.css */
+
+.banner-container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    /* Adicionamos uma sombra sutil para se integrar ao nosso design */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
+    margin-top: 10px;
+}
+
+.slides-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out; /* Transição de fade suave */
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.slide a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.slide-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a mídia cubra todo o espaço */
+}
+
+.banner-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    cursor: pointer;
+    font-size: 2em;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 50%;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.banner-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.left-arrow {
+    left: 25px;
+}
+
+.right-arrow {
+    right: 25px;
+}

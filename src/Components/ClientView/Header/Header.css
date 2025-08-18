@@ -24,10 +24,9 @@
 }
 
 .header-logo {
-    height: 58px; /* Reduz um pouco o tamanho da logo */
+    height: 60px; /* Reduz um pouco o tamanho da logo */
     object-fit: contain;
     display: block;
-    padding-right: 30px;
 }
 
 .header-right {

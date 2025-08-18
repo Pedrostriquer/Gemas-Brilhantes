@@ -1,0 +1,18 @@
+/* Em src/Components/Admin/AdminLayout.css */
+.admin-layout{display:flex;min-height:100vh}
+.admin-sidebar{width:260px;flex-shrink:0;background-color:#122C4F;color:#FFFFFF;display:flex;flex-direction:column}
+.sidebar-header{padding:25px;text-align:center;border-bottom:1px solid #ffffff1a}
+.sidebar-title-link{text-decoration:none}
+.sidebar-title{font-size:1.8em;font-weight:400;color:#FFFFFF;transition:color .3s ease}
+.sidebar-title-link:hover .sidebar-title{color:#e0e0e0}
+.sidebar-nav{flex-grow:1;padding:20px 0}
+.nav-link{display:flex;align-items:center;gap:15px;padding:15px 25px;text-decoration:none;color:#e0e0e0;font-family:'Poppins',sans-serif;position:relative;transition:background-color .3s ease,color .3s ease}
+.nav-link i{font-size:1.2em;width:20px}
+.nav-link span{font-weight:500}
+.nav-link:hover{background-color:#ffffff0d}
+.nav-link.active{background-color:#FFFFFF;color:#122C4F;font-weight:600}
+.nav-link.active::before{content:'';position:absolute;left:0;top:0;height:100%;width:4px;background-color:#f0932b}
+.sidebar-footer{padding:25px;border-top:1px solid #ffffff1a}
+.logout-button{width:100%;display:flex;align-items:center;gap:15px;padding:15px;background:0 0;border:1px solid #ffffff33;border-radius:8px;color:#e0e0e0;font-family:'Poppins',sans-serif;font-size:1em;cursor:pointer;transition:all .3s ease}
+.logout-button:hover{background-color:#c0392b;border-color:#c0392b;color:#FFFFFF}
+.admin-main-content{flex-grow:1;background-color:#f8f9fa;padding:40px;overflow-y:auto}

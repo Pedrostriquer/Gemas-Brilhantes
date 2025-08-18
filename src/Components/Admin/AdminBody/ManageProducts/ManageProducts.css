@@ -1,0 +1,107 @@
+/* Em src/Components/Admin/AdminBody/ManageProducts/ManageProducts.css */
+
+.manage-products-container {
+    animation: fadeIn .5s ease-out;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.page-header h1 {
+    font-family: 'Helnore', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #122C4F;
+}
+.add-product-btn {
+    background-color: #122C4F;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+.add-product-btn:hover {
+    background-color: #1a3c6d;
+}
+.search-bar-wrapper {
+    position: relative;
+    margin-bottom: 30px;
+}
+.search-bar-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+.search-bar-wrapper input {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+.table-wrapper {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.product-table th, .product-table td {
+    padding: 15px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+.product-table thead {
+    background-color: #f8f9fa;
+}
+.product-table th {
+    font-weight: 600;
+    color: #333;
+}
+.product-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+.product-table tbody tr:last-child {
+    border-bottom: none;
+}
+.product-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+.product-table-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+    margin-right: 5px;
+}
+.action-btn.edit {
+    background-color: #f0932b;
+}
+.action-btn.delete {
+    background-color: #c0392b;
+}
