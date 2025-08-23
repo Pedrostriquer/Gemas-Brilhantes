@@ -1,7 +1,6 @@
 // Dentro de src/App.js
 
 import React, { useState, useEffect } from 'react';
-// 1. Adicionado 'useLocation' para a lógica do loader
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 // --- Componentes da Visão do Cliente ---
@@ -12,8 +11,8 @@ import GemCash from './Components/ClientView/Body/GemCash/GemCash';
 import GemasBrilhantes from './Components/ClientView/Body/GemasBrilhantes/GemasBrilhantes';
 import Joias from './Components/ClientView/Body/Joias/Joias';
 import ProductPage from './Components/ClientView/Body/Produtos/ProductPage';
-// 2. Adicionado o PageLoader
 import PageLoader from './Components/ClientView/PageLoader/PageLoader';
+import CartPage from './Components/ClientView/Body/CartPage/CartPage';
 
 // --- Componentes do Admin ---
 import AdminLogin from './Components/Admin/AdminLogin/AdminLogin';
@@ -23,42 +22,27 @@ import AdminDashboard from './Components/Admin/AdminBody/AdminDashboard/AdminDas
 import ManageProducts from './Components/Admin/AdminBody/ManageProducts/ManageProducts';
 import ProductList from './Components/Admin/AdminBody/ManageProducts/ProductList';
 import ManageAttributes from './Components/Admin/AdminBody/ManageAttributes/ManageAttributes';
-// 3. Adicionado o ManageHome para a rota correta
 import ManageHome from './Components/Admin/AdminBody/ManageHome/ManageHome';
-
+import ManageFooter from './Components/Admin/AdminBody/ManageFooter/ManageFooter';
+import ManageGemCash from './Components/Admin/AdminBody/ManageGemCash/ManageGemCash';
 
 function App() {
-    const footerData = {
-        phone: '(11) 99999-8888',
-        email: 'contato@gemasbrilhantes.com',
-        whatsappNumber: '+5511999998888',
-        instagram: 'https://www.instagram.com/gemasbrilhantes',
-        facebook: 'https://www.facebook.com/gemasbrilhantes'
-    };
-
-    // 4. Lógica para controlar o estado do loader
     const [isTransitioning, setIsTransitioning] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
-        // Ignora a transição para rotas de admin para manter a agilidade do painel
         if (location.pathname.startsWith('/admin')) {
             return;
         }
-
-        setIsTransitioning(true); // Ativa o loader
-
-        // Esconde o loader após 400ms
+        setIsTransitioning(true);
         const timer = setTimeout(() => {
             setIsTransitioning(false);
         }, 400);
-
-        return () => clearTimeout(timer); // Limpeza
+        return () => clearTimeout(timer);
     }, [location.pathname]);
 
     return (
         <div className="App">
-            {/* 5. Renderiza o PageLoader globalmente */}
             <PageLoader isLoading={isTransitioning} />
             
             <Routes>
@@ -66,7 +50,8 @@ function App() {
                 <Route path="/*" element={
                     <>
                         <Header />
-                        <main>
+                        {/* A classe 'main-content' foi adicionada para o sticky footer */}
+                        <main className="main-content">
                             <Routes>
                                 <Route index element={<Navigate replace to="/home" />} />
                                 <Route path="/home" element={<Home />} />
@@ -74,10 +59,11 @@ function App() {
                                 <Route path="/gemas-brilhantes" element={<GemasBrilhantes />} />
                                 <Route path="/joias" element={<Joias />} />
                                 <Route path="/produto/:id" element={<ProductPage />} />
+                                <Route path="/carrinho" element={<CartPage />} />
                                 <Route path="*" element={<Navigate replace to="/home" />} />
                             </Routes>
                         </main>
-                        <Footer footerData={footerData} />
+                        <Footer />
                     </>
                 } />
 
@@ -88,9 +74,8 @@ function App() {
                     element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}
                 >
                     <Route path="dashboard" element={<AdminDashboard />} />
-                    {/* --- CORREÇÃO APLICADA AQUI --- */}
                     <Route path="home" element={<ManageHome />} />
-                    <Route path="gemcash" element={<h2>Gerenciar Página GemCash</h2>} />
+                    <Route path="gemcash" element={<ManageGemCash />} />
                     
                     <Route path="produtos" element={<ManageProducts />}>
                         <Route index element={<Navigate to="gemas" />} />
@@ -99,6 +84,7 @@ function App() {
                     </Route>
                     
                     <Route path="atributos" element={<ManageAttributes />} />
+                    <Route path="footer" element={<ManageFooter />} />
                 </Route>
             </Routes>
         </div>

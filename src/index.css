@@ -25,3 +25,16 @@ body {
   font-family: 'Helnore', sans-serif;
 }
 
+/* --- A CORREÇÃO DO STICKY FOOTER ESTÁ AQUI --- */
+
+/* 1. Garante que o container principal da aplicação ocupe no mínimo 100% da altura da tela */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. Diz ao nosso container de conteúdo principal (<main>) para crescer e ocupar todo o espaço disponível */
+.main-content {
+  flex: 1; /* Shorthand for flex-grow: 1; */
+}

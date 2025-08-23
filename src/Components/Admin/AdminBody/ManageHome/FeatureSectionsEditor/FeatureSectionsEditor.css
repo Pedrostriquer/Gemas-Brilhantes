@@ -1,0 +1,90 @@
+/* Dentro de src/Components/Admin/AdminBody/ManageHome/FeatureSectionsEditor/FeatureSectionsEditor.css */
+
+.feature-sections-editor-wrapper {
+    font-family: 'Poppins', sans-serif;
+}
+
+.editor-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.sections-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.feature-editor-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feature-editor-card h4 {
+    margin: 0;
+    font-weight: 600;
+    color: #122C4F;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input, .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.media-group {
+    margin-top: auto; /* Empurra para baixo */
+}
+
+.media-preview {
+    width: 100%;
+    height: 100px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.media-preview img, .media-preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.upload-btn.small {
+    padding: 8px 12px;
+    font-size: 0.85em;
+    align-self: flex-start;
+}

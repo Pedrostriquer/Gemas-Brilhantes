@@ -2,34 +2,39 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore'; // Funções para buscar um único documento
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../../firebase/config';
+import { useCart } from '../../../../context/CartContext'; // 1. Importa o hook do carrinho
 import './ProductPage.css';
 
 const ProductPage = () => {
-    const { id } = useParams(); // Pega o ID da URL, por exemplo: "/produto/aBcDeF123"
+    const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [selectedMedia, setSelectedMedia] = useState(null); // Para controlar a galeria
+    const [selectedMedia, setSelectedMedia] = useState(null);
+    
+    // 2. Obtém a função 'addToCart' do nosso CartContext
+    const { addToCart } = useCart();
+    // NOVO: Estado para feedback visual ao adicionar ao carrinho
+    const [addedToCart, setAddedToCart] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
             setError(false);
             try {
-                const docRef = doc(db, 'products', id); // Cria a referência ao documento do produto
+                const docRef = doc(db, 'products', id);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
                     const productData = { id: docSnap.id, ...docSnap.data() };
                     setProduct(productData);
-                    // Define a primeira mídia do produto como a selecionada por padrão
                     if (productData.media && productData.media.length > 0) {
                         setSelectedMedia(productData.media[0]);
                     }
                 } else {
-                    setError(true); // Produto não encontrado
+                    setError(true);
                 }
             } catch (err) {
                 console.error("Erro ao buscar o produto:", err);
@@ -40,7 +45,16 @@ const ProductPage = () => {
         };
 
         fetchProduct();
-    }, [id]); // Re-executa o efeito se o ID na URL mudar
+    }, [id]);
+
+    const handleAddToCart = () => {
+        addToCart(product);
+        setAddedToCart(true); // Ativa o feedback visual
+        // Reseta o feedback após 2 segundos
+        setTimeout(() => {
+            setAddedToCart(false);
+        }, 2000);
+    };
 
     if (loading) {
         return <div className="page-loading-message">Carregando produto...</div>;
@@ -67,17 +81,17 @@ const ProductPage = () => {
                 {/* Coluna da Mídia com Galeria */}
                 <div className="product-media-gallery">
                     <div className="main-media-container">
-                        {selectedMedia.type === 'video' ? (
+                        {selectedMedia?.type === 'video' ? (
                             <video key={selectedMedia.url} src={selectedMedia.url} autoPlay muted loop controls className="main-media-item" />
                         ) : (
-                            <img src={selectedMedia.url} alt={product.name} className="main-media-item" />
+                            <img src={selectedMedia?.url} alt={product.name} className="main-media-item" />
                         )}
                     </div>
                     <div className="thumbnail-container">
-                        {product.media.map((item, index) => (
+                        {product.media?.map((item, index) => (
                             <div 
                                 key={index} 
-                                className={`thumbnail-item ${selectedMedia.url === item.url ? 'active' : ''}`}
+                                className={`thumbnail-item ${selectedMedia?.url === item.url ? 'active' : ''}`}
                                 onClick={() => setSelectedMedia(item)}
                             >
                                 {item.type === 'video' ? (
@@ -96,14 +110,10 @@ const ProductPage = () => {
                     <p className="product-page-price">{formattedPrice}</p>
                     <p className="product-page-description">{product.description}</p>
                     
-                    <a 
-                        href="https://link.externo.de.compra/aqui" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="buy-button"
-                    >
-                        Consultar Disponibilidade
-                    </a>
+                    {/* 3. Botão atualizado para adicionar ao carrinho */}
+                    <button onClick={handleAddToCart} className={`buy-button ${addedToCart ? 'added' : ''}`}>
+                        {addedToCart ? 'Adicionado!' : 'Adicionar ao Carrinho'}
+                    </button>
                 </div>
             </div>
         </div>

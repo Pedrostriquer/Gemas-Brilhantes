@@ -1,7 +1,7 @@
 /* Dentro de src/Components/ClientView/Body/GemCash/IntroSection/IntroSection.css */
 
 .intro-section-wrapper {
-    padding: 70px 20px;
+    padding: 100px 40px;
     background-color: #f0f2f5;
 }
 
@@ -10,60 +10,56 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 60px;
 }
 
-/* --- Coluna Esquerda: Texto Fixo --- */
+/* Coluna Esquerda: Texto Fixo */
 .intro-fixed-text-col {
     flex: 1;
     max-width: 450px;
 }
 
 .intro-title {
-    margin-bottom: 20px;
     font-size: 3em;
     font-weight: normal;
-    color: #122C4F;
-    line-height: 1.2;
     font-family: 'Helnore', serif;
     color: #122C4F;
+    line-height: 1.2;
+    margin-bottom: 20px;
 }
 
 .intro-subtitle {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: #000000;
     line-height: 1.7;
-    /* font-weight: normal; */
-
 }
 
-/* --- Coluna Direita: Card com Vídeo --- */
-.intro-video-card-col {
+/* Coluna Direita: Card com Mídia (nomes de classe atualizados) */
+.intro-media-card-col {
     flex: 1;
 }
 
-.video-card {
+.media-card {
     position: relative;
     width: 100%;
-    /* Proporção 16:9 para o vídeo */
-    padding-top: 56.25%; 
+    padding-top: 56.25%; /* Proporção 16:9 */
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
-.intro-video {
+.intro-media {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que o vídeo cubra todo o card */
+    object-fit: cover;
 }
 
-/* Overlay para o conteúdo sobreposto */
-.video-overlay-content {
+/* Overlay (nomes de classe atualizados) */
+.overlay-content {
     position: absolute;
     top: 0;
     left: 0;
@@ -71,24 +67,20 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Alinha o conteúdo na parte de baixo */
+    justify-content: flex-end;
     align-items: center;
     text-align: center;
     padding: 40px;
-    /* Gradiente sutil para garantir legibilidade do texto */
-    background: linear-gradient(to top, rgba(18,44,79,0.7) 0%, rgba(0,0,0,0) 70%);
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
 }
 
 .overlay-text {
     color: #FFFFFF;
-    /* Estado inicial da animação */
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 1.3s ease-out, transform 1.3s ease-out;
-    font-family: 'Poppins', sans-serif;
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
 }
 
-/* Estado final da animação */
 .overlay-text.visible {
     opacity: 1;
     transform: translateY(0);
@@ -111,7 +103,7 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .overlay-button:hover {

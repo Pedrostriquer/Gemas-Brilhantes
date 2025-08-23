@@ -5,18 +5,19 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../../firebase/config';
 import BannerHome from './BannerHome/BannerHome';
 import AboutSection from './AboutSection/AboutSection';
-import FeatureSection from './FeatureSection/FeatureSection'; // Mantém a importação correta
+import FeatureSection from './FeatureSection/FeatureSection';
 import FaqSection from './FaqSection/FaqSection';
 import ReviewsSection from './ReviewsSection/ReviewsSection';
 
 const Home = () => {
-    // Estado para armazenar os dados da Home vindos do Firebase
+    // Estado único para armazenar todos os dados da Home vindos do Firebase
     const [homeData, setHomeData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Efeito para buscar os dados dinâmicos da página (atualmente, só o banner)
+    // Efeito para buscar os dados do documento 'homePage' no Firestore
     useEffect(() => {
         const fetchHomeData = async () => {
+            setLoading(true);
             try {
                 const docRef = doc(db, 'siteContent', 'homePage');
                 const docSnap = await getDoc(docRef);
@@ -34,73 +35,79 @@ const Home = () => {
         };
 
         fetchHomeData();
-    }, []);
+    }, []); // O array vazio [] garante que isso rode apenas uma vez
 
-    // Dados estáticos que ainda não estão no admin
-    const aboutData = {
-        title: 'SOBRE A GEMAS BRILHANTES', mainText: 'Gemas Brilhantes é uma empresa especializada na comercialização de gemas preciosas com alto padrão de qualidade, brilho e procedência.\nNosso compromisso é oferecer pedras preciosas e materiais legítimos, selecionadas por especialistas, que encantam pela beleza e duram por gerações. E também ofertar oportunidades exclusivas no nosso ecossistema para blindar e valorizar o seu patrimônio.', missionTitle: 'MISSÃO', missionText: 'Oferecer gemas preciosas com excelência, proporcionando aos nossos clientes uma experiência de valor, confiança e transparência com nossos produtos.', visionTitle: 'VISÃO', visionText: 'Ser reconhecida como uma das principais referências no Brasil em gemas brilhantes, destacando-se pela qualidade, inovação, segurança e relacionamento com o cliente.'
-    };
-    const faqData = [
-        { question: "As gemas são autênticas?", answer: "Sim, todas as nossas gemas são 100% autênticas e acompanham um certificado de procedência e qualidade, garantindo sua legitimidade e valor." }, { question: "Posso personalizar uma joia que não está no catálogo?", answer: "Com certeza! Nosso serviço de personalização é feito para criar peças únicas. Entre em contato com nossa equipe para discutir sua ideia e transformá-la em uma joia exclusiva." }, { question: "Qual o prazo de entrega?", answer: "Para peças prontas, o prazo de entrega varia de acordo com sua localidade. Para joias personalizadas, o prazo de criação e entrega será informado durante o processo de consulta, geralmente levando de 20 a 30 dias úteis." }, { question: "Como funciona o investimento em GemCash?", answer: "O GemCash é um programa de investimento onde você adquire uma gema de alto valor. Você recebe a posse física da pedra e lucra com uma renda mensal fixa, além da valorização natural da gema ao longo do tempo." }
-    ];
-    const reviewsData = [
-        { name: "Mariana Costa", comment: "A personalização do meu anel de noivado foi uma experiência incrível. A equipe entendeu perfeitamente o que eu queria e o resultado final foi além das minhas expectativas. Uma verdadeira obra de arte!" }, { name: "João Almeida", comment: "Investi em uma esmeralda através do GemCash e estou muito satisfeito. O processo foi transparente e o atendimento é de primeira. Recomendo para quem busca segurança e valor." }, { name: "Beatriz Lima", comment: "Qualidade impecável e beleza estonteante. Comprei um par de brincos de água-marinha e fiquei impressionada com o brilho e a pureza da gema. Sem dúvida, a melhor do mercado." }
-    ];
-
+    // Enquanto os dados estão carregando, exibimos uma mensagem
     if (loading) {
-        return <div className="loading-message">Carregando página inicial...</div>;
+        // Você poderia substituir isso por um componente de spinner mais elegante
+        return <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Carregando página inicial...</div>;
     }
+
+    // Extrai os dados para variáveis para facilitar o uso e a leitura no JSX
+    const banner = homeData?.banner;
+    const about = homeData?.aboutSection;
+    const features = homeData?.featureSections;
+    const faq = homeData?.faq;
+    const reviews = homeData?.reviews;
 
     return (
         <>
-            {/* O BannerHome volta a receber os dados dinâmicos do estado 'homeData' */}
-            {homeData?.banner && (
+            {/* O BannerHome é 100% dinâmico */}
+            {banner && (
                 <BannerHome 
-                    slides={homeData.banner.slides || []} 
-                    speed={homeData.banner.speed}
-                    showArrows={homeData.banner.showArrows}
-                    width={homeData.banner.width}
-                    height={homeData.banner.height}
+                    slides={banner.slides || []} 
+                    speed={banner.speed}
+                    showArrows={banner.showArrows}
+                    width={banner.width}
+                    height={banner.height}
                 />
             )}
             
-            <AboutSection aboutData={aboutData} />
+            {/* A Seção Sobre é 100% dinâmica */}
+            {about && <AboutSection aboutData={about} />}
             
+            {/* As Seções de Destaque são dinâmicas, com imagens/vídeos estáticos de fallback */}
+            {features?.gemas && (
+                 <FeatureSection 
+                    layout="reverse"
+                    title={features.gemas.title}
+                    text={features.gemas.text}
+                    buttonText={features.gemas.buttonText}
+                    buttonLink="/gemas-brilhantes"
+                    mediaSrc={features.gemas.mediaSrc || "/img/Vídeo_de_Gema_para_Loja.mp4"}
+                    mediaType={features.gemas.mediaSrc ? features.gemas.mediaType : 'video'}
+                />
+            )}
 
-            {/* Seção 2: Gemas (Texto à direita, Imagem à esquerda) */}
-            <FeatureSection 
-                layout="reverse"
-                title="Gemas Brilhantes Selecionadas"
-                text="Explore nossa curadoria de gemas raras e certificadas. Cada pedra é selecionada por especialistas para garantir o máximo de brilho, pureza e valor de mercado."
-                buttonText="Saiba Mais"
-                buttonLink="/gemas-brilhantes"
-                mediaSrc="/img/bannergemas3.png"
-                mediaType="image"
-            />
+            {features?.gemcash && (
+                <FeatureSection 
+                    layout="default" 
+                    title={features.gemcash.title}
+                    text={features.gemcash.text}
+                    buttonText={features.gemcash.buttonText}
+                    buttonLink="/gemcash"
+                    mediaSrc={features.gemcash.mediaSrc || "/img/Captura de Tela 2025-08-22 às 23.00.03.png"}
+                    mediaType={features.gemcash.mediaSrc ? features.gemcash.mediaType : 'image'}
+                />
+            )}
+            
+            {features?.joias && (
+                 <FeatureSection 
+                    layout="reverse"
+                    title={features.joias.title}
+                    text={features.joias.text}
+                    buttonText={features.joias.buttonText}
+                    buttonLink="/joias"
+                    mediaSrc={features.joias.mediaSrc || "/img/Untitled design~3.mp4"}
+                    mediaType={features.joias.mediaSrc ? features.joias.mediaType : 'video'}
+                />
+            )}
 
-            <FeatureSection 
-                layout="default" 
-                title="GemCash: Seu Brilho, Seu Benefício"
-                text="Transforme a posse de gemas preciosas em um fluxo de renda mensal. Com o GemCash, seu patrimônio não apenas se valoriza, mas também gera lucros constantes com total segurança e autonomia."
-                buttonText="Conheça o GemCash"
-                buttonLink="/gemcash"
-                mediaSrc="/img/istockphoto-1453845561-640_adpp_is.mp4"
-                mediaType="video"
-            />
+            {/* A Seção de FAQ é 100% dinâmica */}
+            {faq && <FaqSection faqData={faq} />}
 
-            {/* Seção 3: Joias (Texto à esquerda, Imagem à direita) */}
-             <FeatureSection 
-                layout="reverse"
-                title="Joias que Contam Histórias"
-                text="Descubra coleções de anéis, colares e brincos que combinam design atemporal com a beleza exuberante das gemas brasileiras. Peças criadas para celebrar os momentos importantes da sua vida."
-                buttonText="Saiba Mais"
-                buttonLink="/joias"
-                mediaSrc="/img/bannerjoias3.mp4"
-                mediaType="video"
-            />
-
-            <FaqSection faqData={faqData} />
-            <ReviewsSection reviewsData={reviewsData} />
+            {/* A Seção de Reviews agora é 100% dinâmica */}
+            {reviews && <ReviewsSection reviewsData={reviews} />}
         </>
     );
 };

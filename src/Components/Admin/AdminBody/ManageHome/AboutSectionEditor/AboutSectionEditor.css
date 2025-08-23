@@ -1,0 +1,48 @@
+/* Dentro de src/Components/Admin/AdminBody/ManageHome/AboutSectionEditor/AboutSectionEditor.css */
+
+.about-section-editor-wrapper {
+    font-family: 'Poppins', sans-serif;
+}
+
+.editor-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.columns-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input, .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    resize: vertical;
+}
+
+.editor-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,65 @@
+/* Dentro de src/Components/Admin/AdminBody/ManageFooter/ManageFooter.css */
+
+.manage-footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.manage-footer-container h1 {
+    font-size: 2em;
+    font-weight: normal;
+    color: #122C4F;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.footer-editor-form {
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.save-btn {
+    align-self: flex-end; /* Alinha o botão à direita */
+    margin-top: 15px;
+    background-color: #122C4F;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
