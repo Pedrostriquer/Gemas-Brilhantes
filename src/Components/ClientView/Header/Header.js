@@ -2,19 +2,23 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../../context/CartContext'; // Importa o hook para acessar o estado do carrinho
 import './Header.css';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { cartItems } = useCart(); // Acessa os itens do carrinho a partir do contexto
+
+    // Calcula o número total de itens no carrinho (somando as quantidades)
+    const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const menuItems = [
         { name: 'HOME', path: '/home' },
-        { name: 'GEMAS PRECIOSAS', path: '/gemas-brilhantes' }, // Esta será a página de Gemas
-        { name: 'JOIAS', path: '/joias' }, // A nova página de Joias
+        { name: 'GEMAS PRECIOSAS', path: '/gemas-brilhantes' },
+        { name: 'JOIAS', path: '/joias' },
         { name: 'GEMCASH', path: '/gemcash' },
     ];
 
-    // Função para fechar o menu ao clicar em um link
     const handleLinkClick = () => {
         setIsMenuOpen(false);
     };
@@ -22,9 +26,12 @@ const Header = () => {
     return (
         <header className="header-container">
             <div className="header-top-row">
-                {/* Placeholder para manter a logo centralizada */}
-                <div className="header-side-placeholder"></div>
+                {/* --- LADO ESQUERDO --- */}
+                <div className="header-left">
+                    <button className="platform-button">Conheça nossa plataforma</button>
+                </div>
 
+                {/* --- CENTRO --- */}
                 <div className="header-center">
                     <Link to="/home">
                         <img 
@@ -35,18 +42,22 @@ const Header = () => {
                     </Link>
                 </div>
                 
+                {/* --- LADO DIREITO --- */}
                 <div className="header-right">
-                    <button className="platform-button-desktop">
-                        Conheça nossa plataforma
-                    </button>
-                    {/* Botão Hambúrguer (só aparece no mobile) */}
+                    {/* Ícone de Carrinho que substituiu o botão */}
+                    <Link to="/carrinho" className="cart-icon-link">
+                        <i className="fas fa-shopping-cart"></i>
+                        {/* Exibe a contagem apenas se houver itens no carrinho */}
+                        {totalItemsInCart > 0 && <span className="cart-badge">{totalItemsInCart}</span>}
+                    </Link>
+                    {/* Botão Hambúrguer (para mobile) */}
                     <button className="hamburger-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
                     </button>
                 </div>
             </div>
 
-            {/* Navegação para Desktop */}
+            {/* --- NAVEGAÇÃO DESKTOP --- */}
             <nav className="header-nav-desktop">
                 <ul>
                     {menuItems.map(item => (
@@ -57,7 +68,7 @@ const Header = () => {
                 </ul>
             </nav>
 
-            {/* Navegação para Mobile (Overlay) */}
+            {/* --- NAVEGAÇÃO MOBILE (OVERLAY) --- */}
             <nav className={`mobile-nav-overlay ${isMenuOpen ? 'open' : ''}`}>
                 <ul>
                     {menuItems.map(item => (

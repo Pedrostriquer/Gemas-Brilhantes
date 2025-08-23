@@ -4,19 +4,24 @@
     width: 100%;
     background-color: #FFFFFF;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    position: relative; /* Necessário para o posicionamento do menu mobile */
-    z-index: 2000; /* Garante que o header fique acima de tudo */
+    position: relative;
+    z-index: 2000;
 }
 
 .header-top-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px; /* Reduzi um pouco o padding vertical */
+    padding: 15px 40px;
 }
 
-.header-side-placeholder, .header-right {
+.header-left, .header-right {
     flex: 1;
+}
+
+.header-left {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .header-center {
@@ -24,7 +29,7 @@
 }
 
 .header-logo {
-    height: 60px; /* Reduz um pouco o tamanho da logo */
+    height: 63px;
     object-fit: contain;
     display: block;
 }
@@ -32,9 +37,11 @@
 .header-right {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 20px; /* Espaço entre o carrinho e o botão hambúrguer */
 }
 
-.platform-button-desktop {
+.platform-button, .platform-button-desktop {
     background-color: #122C4F;
     color: #FFFFFF;
     border: none;
@@ -47,18 +54,48 @@
     transition: background-color 0.3s ease;
 }
 
-.platform-button-desktop:hover {
+.platform-button:hover, .platform-button-desktop:hover {
     background-color: #1a3c6d;
 }
 
+/* --- ESTILOS PARA O CARRINHO DE COMPRAS --- */
+.cart-icon-link {
+    position: relative;
+    color: #122C4F;
+    font-size: 1.5em;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.cart-icon-link:hover {
+    transform: scale(1.1);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #c0392b;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6em;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    border: 2px solid #FFFFFF;
+}
+
+
 /* --- Navegação de Desktop --- */
 .header-nav-desktop {
-    background-color: #FFFFFF; 
+    background-color: #f8f9fa; 
     padding: 15px 0;
     display: flex;
     justify-content: center;
-    border-top: solid 1.1px #eee;
-    border-bottom: solid 1px #eee;
 }
 
 .header-nav-desktop ul {
@@ -93,8 +130,8 @@
 }
 
 /* --- ESTILOS PARA MOBILE --- */
-.hamburger-button { /* Botão Hambúrguer */
-    display: none; /* Escondido por padrão */
+.hamburger-button {
+    display: none;
     background: none;
     border: none;
     font-size: 1.8em;
@@ -102,20 +139,17 @@
     cursor: pointer;
 }
 
-.mobile-nav-overlay { /* O menu que cobre a tela */
+.mobile-nav-overlay {
     position: fixed;
-    top: 80px; /* A altura da .header-top-row */
+    top: 80px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 80px); /* Ocupa o resto da tela */
+    height: calc(100vh - 80px);
     background-color: #FFFFFF;
-    
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    /* Estado inicial (escondido) */
     opacity: 0;
     transform: translateY(-20px);
     pointer-events: none;
@@ -125,7 +159,7 @@
 .mobile-nav-overlay.open {
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto; /* Torna o menu clicável */
+    pointer-events: auto;
 }
 
 .mobile-nav-overlay ul {
@@ -139,7 +173,7 @@
 
 .mobile-nav-overlay a {
     font-family: 'Helnore', serif; 
-    font-size: 2.5em; /* Fonte grande para impacto */
+    font-size: 2.5em;
     color: #122C4F;
     text-decoration: none;
 }
@@ -157,19 +191,18 @@
     margin-top: 20px;
 }
 
-/* --- Media Query para Ativar o Modo Responsivo --- */
+/* --- Media Query --- */
 @media (max-width: 900px) {
-    /* Esconde a navegação e o botão de desktop */
-    .header-nav-desktop, .platform-button-desktop {
+    .header-nav-desktop {
         display: none;
     }
-    
-    /* Mostra o botão hambúrguer */
     .hamburger-button {
         display: block;
     }
-
+    .platform-button {
+        display: none; /* Esconde o botão da esquerda no mobile para dar mais espaço */
+    }
     .header-top-row {
-        padding: 15px 20px; /* Menor padding em telas pequenas */
+        padding: 15px 20px;
     }
 }

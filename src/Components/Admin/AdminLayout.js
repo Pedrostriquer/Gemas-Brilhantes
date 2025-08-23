@@ -22,13 +22,11 @@ const AdminLayout = () => {
             {/* Sidebar (Menu Lateral) */}
             <aside className="admin-sidebar">
                 <div className="sidebar-header">
-                    {/* Título agora é um link para o dashboard principal do admin */}
                     <Link to="/admin/dashboard" className="sidebar-title-link">
                         <h2 className="sidebar-title fonte-principal">Painel Admin</h2>
                     </Link>
                 </div>
                 <nav className="sidebar-nav">
-                    {/* NavLink adiciona uma classe 'active' ao link que corresponde à rota atual, permitindo estilização especial */}
                     <NavLink to="/admin/dashboard" className="nav-link">
                         <i className="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
@@ -48,6 +46,11 @@ const AdminLayout = () => {
                     <NavLink to="/admin/atributos" className="nav-link">
                         <i className="fas fa-tags"></i>
                         <span>Gerenciar Atributos</span>
+                    </NavLink>
+                    {/* --- LINK ADICIONADO AQUI --- */}
+                    <NavLink to="/admin/footer" className="nav-link">
+                        <i className="fas fa-shoe-prints"></i>
+                        <span>Gerenciar Rodapé</span>
                     </NavLink>
                 </nav>
                 <div className="sidebar-footer">

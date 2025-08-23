@@ -1,5 +1,6 @@
+// Dentro de src/Components/ClientView/Body/Home/BannerHome/BannerHome.js
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-// 1. Importe o componente 'Link' do react-router-dom
 import { Link } from 'react-router-dom';
 import './BannerHome.css';
 
@@ -7,7 +8,7 @@ const BannerHome = ({ slides, speed, showArrows, width, height }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const validSlides = useMemo(() => 
-        slides.filter(slide => slide && slide.src && slide.src.trim() !== ''), 
+        (slides || []).filter(slide => slide && slide.src && slide.src.trim() !== ''), 
     [slides]);
 
     const goToNext = useCallback(() => {
@@ -35,35 +36,51 @@ const BannerHome = ({ slides, speed, showArrows, width, height }) => {
 
     const renderSlideMedia = (slide) => {
         if (slide.type === 'video') {
-            return <video className="slide-media" src={slide.src} autoPlay muted loop playsInline />;
+            return <video className="home-banner-slide-media" src={slide.src} autoPlay muted loop playsInline />;
         }
-        return <img src={slide.src} alt={`Slide ${currentIndex + 1}`} className="slide-media" />;
+        return <img src={slide.src} alt="Banner" className="home-banner-slide-media" />;
     };
 
     return (
-        <div className="banner-container" style={{ maxWidth: `${width}px`, height: `${height}px` }}>
+        <div className="home-banner-container" style={{ maxWidth: `${width}px`, height: `${height}px` }}>
             {showArrows && validSlides.length > 1 && (
                 <>
-                    <div className="banner-arrow left-arrow" onClick={goToPrevious}>&#10094;</div>
-                    <div className="banner-arrow right-arrow" onClick={goToNext}>&#10095;</div>
+                    <div className="home-banner-arrow left-arrow" onClick={goToPrevious}>&#10094;</div>
+                    <div className="home-banner-arrow right-arrow" onClick={goToNext}>&#10095;</div>
                 </>
             )}
 
-            <div className="slides-container">
+            <div className="home-banner-slides-container">
                 {validSlides.map((slide, index) => (
-                    <div className={`slide ${index === currentIndex ? 'active' : ''}`} key={slide.id}>
+                    <div className={`home-banner-slide ${index === currentIndex ? 'active' : ''}`} key={slide.id}>
                         {index === currentIndex && (
-                            slide.link ? (
-                                // --- CORREÇÃO AQUI ---
-                                // Substituímos <a> por <Link> e href por to.
-                                // Removemos target="_blank" para navegar na mesma aba.
-                                <Link to={slide.link}>
-                                    {renderSlideMedia(slide)}
-                                </Link>
-                            ) : (
-                                // Se não houver link, renderiza a mídia sem ser clicável
-                                renderSlideMedia(slide)
-                            )
+                            <>
+                                {/* Estrutura Lógica Corrigida */}
+                                
+                                {/* 1. Se NÃO houver overlay, a mídia inteira pode ser um link */}
+                                {!slide.overlay?.title && slide.link ? (
+                                    <Link to={slide.link}>{renderSlideMedia(slide)}</Link>
+                                ) : (
+                                    // Caso contrário, a mídia é apenas visual
+                                    renderSlideMedia(slide)
+                                )}
+                                
+                                {/* 2. Se houver overlay, ele é renderizado separadamente, com seu próprio link no botão */}
+                                {slide.overlay?.title && (
+                                    <div className="home-banner-overlay-content">
+                                        <div className="home-banner-overlay-text-wrapper">
+                                            <div className="home-banner-overlay-title-group">
+                                                {slide.overlay.logoSrc && <img src={slide.overlay.logoSrc} alt="Logo" className="home-banner-overlay-logo"/>}
+                                                <h2 className="home-banner-overlay-title fonte-principal">{slide.overlay.title}</h2>
+                                            </div>
+                                            {slide.overlay.subtitle && <p className="home-banner-overlay-subtitle">{slide.overlay.subtitle}</p>}
+                                            {slide.overlay.buttonText && slide.overlay.buttonLink && (
+                                                <Link to={slide.overlay.buttonLink} className="home-banner-overlay-button">{slide.overlay.buttonText}</Link>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 ))}

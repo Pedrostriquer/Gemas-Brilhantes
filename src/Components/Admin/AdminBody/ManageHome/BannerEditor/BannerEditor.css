@@ -18,6 +18,9 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
     margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .control-group {
@@ -37,6 +40,7 @@
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 1em;
+    outline: none;
 }
 
 .control-group span {
@@ -49,7 +53,7 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    margin-top: auto; /* Alinha na parte de baixo do grid */
+    margin-top: auto;
 }
 
 .slides-title {
@@ -67,12 +71,19 @@
 
 .slide-editor-card {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.slide-media-controls {
+    display: flex;
     align-items: center;
     gap: 20px;
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #eee;
 }
 
 .slide-preview {
@@ -121,6 +132,11 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    transition: background-color 0.3s;
+}
+
+.slide-inputs .upload-btn:hover {
+    background-color: #dee2e6;
 }
 
 .slide-inputs .link-input {
@@ -139,6 +155,68 @@
     border-radius: 50%;
     font-size: 1.5em;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.slide-inputs .remove-btn:hover {
+    background-color: #f8d7da;
+}
+
+.slide-overlay-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.slide-overlay-controls h5 {
+    grid-column: 1 / -1;
+    margin: 0 0 10px 0;
+    font-size: 1em;
+    color: #555;
+    font-weight: 600;
+}
+
+.slide-overlay-controls input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+.logo-upload-group {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.logo-upload-group label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #555;
+}
+
+.logo-uploader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-preview {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.upload-btn.small {
+    padding: 8px 12px;
+    font-size: 0.85em;
 }
 
 .editor-actions {
@@ -154,18 +232,26 @@
     font-size: 1em;
     font-weight: 500;
     cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
 .add-slide-btn {
     background-color: #e0e7ff;
     color: #4338ca;
-    border: none;
+}
+
+.add-slide-btn:hover {
+    background-color: #c7d2fe;
 }
 
 .save-btn {
     background-color: #122C4F;
     color: #FFFFFF;
-    border: none;
+}
+
+.save-btn:hover {
+    background-color: #1a3c6d;
 }
 
 .save-btn:disabled {

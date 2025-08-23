@@ -1,0 +1,88 @@
+/* Dentro de src/Components/Admin/AdminBody/ManageHome/FaqEditor/FaqEditor.css */
+
+.faq-editor-wrapper {
+    font-family: 'Poppins', sans-serif;
+}
+
+.editor-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.faq-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.faq-editor-item {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    display: grid;
+    grid-template-columns: 1fr auto; /* Coluna para inputs, coluna para o botão */
+    grid-template-areas: 
+        "question remove"
+        "answer   remove";
+    gap: 15px;
+    align-items: center;
+}
+
+.faq-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.faq-input.question {
+    grid-area: question;
+    font-weight: 500;
+}
+
+.faq-input.answer {
+    grid-area: answer;
+    resize: vertical;
+}
+
+.remove-faq-btn {
+    grid-area: remove;
+    background-color: #fbeaea;
+    color: #c0392b;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    line-height: 1;
+}
+
+.remove-faq-btn:hover {
+    background-color: #f8d7da;
+}
+
+.editor-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.add-faq-btn {
+    background-color: #e0e7ff;
+    color: #4338ca;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+}

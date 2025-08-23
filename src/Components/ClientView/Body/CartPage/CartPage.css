@@ -1,0 +1,17 @@
+/* Em src/Components/ClientView/Body/CartPage/CartPage.css */
+.cart-page-wrapper{max-width:1200px;margin:50px auto;padding:0 20px}
+.cart-title{text-align:center;font-size:2.5em;margin-bottom:40px;color:#122C4F}
+.cart-layout{display:grid;grid-template-columns:2fr 1fr;gap:40px}
+.cart-item{display:flex;gap:20px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #eee}
+.cart-item-img{width:100px;height:100px;object-fit:cover;border-radius:8px}
+.cart-item-details{flex-grow:1}
+.item-name{font-family:'Helnore',serif;font-size:1.2em;color:#333;margin:0 0 10px}
+.item-price,.item-quantity{font-family:'Poppins',sans-serif;margin:5px 0}
+.remove-item-btn{background:0 0;border:none;font-size:1.5em;color:#aaa;cursor:pointer}
+.cart-summary{background-color:#f8f9fa;padding:30px;border-radius:8px}
+.cart-summary h3{font-family:'Helnore',serif;font-size:1.5em;margin-bottom:20px}
+.summary-row{display:flex;justify-content:space-between;margin-bottom:15px;font-family:'Poppins',sans-serif}
+.summary-row.total span{font-weight:700;font-size:1.2em}
+.checkout-btn{width:100%;margin-top:20px;background-color:#122C4F;color:#fff;border:none;padding:15px;border-radius:8px;font-size:1.1em;cursor:pointer}
+.cart-empty{text-align:center;padding:100px 0}
+.start-shopping-btn{display:inline-block;margin-top:20px;background-color:#122C4F;color:#fff;padding:12px 25px;border-radius:25px;text-decoration:none}
