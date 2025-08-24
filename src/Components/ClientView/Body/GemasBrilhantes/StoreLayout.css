@@ -1,4 +1,4 @@
-/* Dentro de src/Components/ClientView/Body/GemasBrilhantes/GemasBrilhantes.css */
+/* Dentro de src/Components/ClientView/Body/GemasBrilhantes/StoreLayout.css */
 
 .store-page-wrapper {
     padding: 60px 40px;
@@ -65,7 +65,7 @@
     gap: 30px;
 }
 
-/* --- ESTILOS RESPONSIVOS APRIMORADOS --- */
+/* --- ESTILOS RESPONSIVOS E DO MODAL (AGORA ÚNICOS E CORRETOS) --- */
 
 .mobile-filter-button {
     display: none;
@@ -80,8 +80,6 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
     z-index: 5000;
-    
-    /* Estado inicial: escondido */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
@@ -89,7 +87,7 @@
 
 .sidebar-mobile-modal.open {
     opacity: 1;
-    pointer-events: auto; /* Torna o overlay clicável para fechar */
+    pointer-events: auto;
 }
 
 /* O conteúdo que desliza da lateral */
@@ -97,20 +95,19 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 300px; /* Largura fixa para a sidebar */
-    max-width: 80%; /* Garante que não ocupe a tela toda em celulares menores */
+    width: 300px;
+    max-width: 80%;
     height: 100%;
-    background-color: #FFFFFF;
+    background-color: #FFFFFF; /* A sidebar em si é branca */
     box-shadow: 4px 0 15px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    
-    transform: translateX(-100%); /* Começa fora da tela */
+    transform: translateX(-100%);
     transition: transform 0.4s ease-in-out;
 }
 
 .sidebar-mobile-modal.open .sidebar-modal-content {
-    transform: translateX(0); /* Entra na tela */
+    transform: translateX(0);
 }
 
 .modal-header {
@@ -122,20 +119,10 @@
     flex-shrink: 0;
 }
 
-.modal-header .sidebar-title {
-    margin: 0;
-}
+.modal-header .sidebar-title { margin: 0; }
 
-.close-modal-btn {
-    background: none;
-    border: none;
-    font-size: 1.8em;
-    line-height: 1;
-    color: #aaa;
-    cursor: pointer;
-}
+.close-modal-btn { background: none; border: none; font-size: 1.8em; line-height: 1; color: #aaa; cursor: pointer; }
 
-/* Adiciona um container para o corpo da sidebar para permitir scroll */
 .modal-body {
     padding: 10px 20px;
     overflow-y: auto;
@@ -161,10 +148,23 @@
     cursor: pointer;
 }
 
-/* -- Media Query para telas de até 900px -- */
 @media (max-width: 900px) {
     .sidebar-desktop-wrapper { display: none; }
-    .mobile-filter-button { display: inline-flex; }
+    .mobile-filter-button { display: inline-flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 20px; padding: 10px 15px; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    /* (outras regras de responsividade que já tínhamos) */
+    .store-page-wrapper { padding: 40px 20px; }
+    .store-body { gap: 0; }
+    .content-header { flex-wrap: wrap; }
+    .store-search-input { width: 100%; max-width: none; order: 2; margin-top: 15px; }
+    .header-controls { order: 1; }
+}
+
+.no-products-found, .sidebar-loading, .loading-products {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    color: #555;
+    padding: 50px;
+    text-align: center;
+    width: 100%;
+    grid-column: 1 / -1;
 }

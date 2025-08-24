@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../../../firebase/config';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import './GemasBrilhantes.css';
+import './StoreLayout.css'; 
 import ProductCard from './ProductCard';
 import FilterSidebar from './FilterSidebar';
 
@@ -81,6 +81,18 @@ const GemasBrilhantes = () => {
 
     }, [filters, searchTerm, sortOrder, allProducts]);
 
+    // Efeito para travar o scroll do body quando o modal está aberto
+    useEffect(() => {
+        if (isMobileFiltersOpen) {
+            document.body.classList.add('body-no-scroll');
+        } else {
+            document.body.classList.remove('body-no-scroll');
+        }
+        return () => {
+            document.body.classList.remove('body-no-scroll');
+        };
+    }, [isMobileFiltersOpen]);
+
     const handleFilterChange = (groupId, valueId) => {
         setFilters(prev => ({ ...prev, [groupId]: valueId }));
     };
@@ -104,7 +116,7 @@ const GemasBrilhantes = () => {
                 {/* Modal de filtros para Mobile */}
                 <div 
                     className={`sidebar-mobile-modal ${isMobileFiltersOpen ? 'open' : ''}`}
-                    onClick={() => setIsMobileFiltersOpen(false)} // Fecha ao clicar no fundo
+                    onClick={() => setIsMobileFiltersOpen(false)}
                 >
                     <div className="sidebar-modal-content" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
