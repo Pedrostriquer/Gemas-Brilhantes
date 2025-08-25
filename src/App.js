@@ -13,6 +13,7 @@ import Joias from './Components/ClientView/Body/Joias/Joias';
 import ProductPage from './Components/ClientView/Body/Produtos/ProductPage';
 import PageLoader from './Components/ClientView/PageLoader/PageLoader';
 import CartPage from './Components/ClientView/Body/CartPage/CartPage';
+import Personalizadas from './Components/ClientView/Body/Personalizadas/Personalizadas';
 
 // --- Componentes do Admin ---
 import AdminLogin from './Components/Admin/AdminLogin/AdminLogin';
@@ -37,7 +38,7 @@ function App() {
         setIsTransitioning(true);
         const timer = setTimeout(() => {
             setIsTransitioning(false);
-        }, 400);
+        }, 300);
         return () => clearTimeout(timer);
     }, [location.pathname]);
 
@@ -61,6 +62,7 @@ function App() {
                                 <Route path="/produto/:id" element={<ProductPage />} />
                                 <Route path="/carrinho" element={<CartPage />} />
                                 <Route path="*" element={<Navigate replace to="/home" />} />
+                                <Route path="/personalizadas" element={<Personalizadas />} /> {/* NOVA ROTA */}
                             </Routes>
                         </main>
                         <Footer />

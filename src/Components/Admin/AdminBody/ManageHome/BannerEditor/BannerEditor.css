@@ -132,11 +132,6 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: background-color 0.3s;
-}
-
-.slide-inputs .upload-btn:hover {
-    background-color: #dee2e6;
 }
 
 .slide-inputs .link-input {
@@ -155,35 +150,34 @@
     border-radius: 50%;
     font-size: 1.5em;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.slide-inputs .remove-btn:hover {
-    background-color: #f8d7da;
-}
-
+/* --- ESTILOS ATUALIZADOS PARA O OVERLAY --- */
 .slide-overlay-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 15px;
     padding-top: 15px;
     border-top: 1px solid #eee;
 }
 
-.slide-overlay-controls h5 {
-    grid-column: 1 / -1;
-    margin: 0 0 10px 0;
+.overlay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.overlay-header h5 {
+    margin: 0;
     font-size: 1em;
     color: #555;
     font-weight: 600;
 }
 
-.slide-overlay-controls input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.9em;
+.overlay-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
 .logo-upload-group {
@@ -219,6 +213,14 @@
     font-size: 0.85em;
 }
 
+.slide-overlay-controls input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
 .editor-actions {
     margin-top: 30px;
     display: flex;
@@ -233,7 +235,6 @@
     font-weight: 500;
     cursor: pointer;
     border: none;
-    transition: background-color 0.3s ease;
 }
 
 .add-slide-btn {
@@ -241,17 +242,9 @@
     color: #4338ca;
 }
 
-.add-slide-btn:hover {
-    background-color: #c7d2fe;
-}
-
 .save-btn {
     background-color: #122C4F;
     color: #FFFFFF;
-}
-
-.save-btn:hover {
-    background-color: #1a3c6d;
 }
 
 .save-btn:disabled {
