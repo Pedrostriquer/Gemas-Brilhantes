@@ -1,21 +1,31 @@
 // Dentro de src/Components/ClientView/Header/Header.js
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useCart } from '../../../context/CartContext'; // Importa o hook para acessar o estado do carrinho
+import React, { useState, useRef, useEffect } from 'react'; // 1. Adicione useRef e useEffect
+import { Link, NavLink } from 'react-router-dom';
+import { useCart } from '../../../context/CartContext';
 import './Header.css';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { cartItems } = useCart(); // Acessa os itens do carrinho a partir do contexto
-
-    // Calcula o número total de itens no carrinho (somando as quantidades)
+    const { cartItems } = useCart();
     const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+    // 2. Crie uma referência para o elemento do header
+    const headerRef = useRef(null);
+    const [headerHeight, setHeaderHeight] = useState(0);
+
+    // 3. Efeito para medir a altura do header
+    useEffect(() => {
+        if (headerRef.current) {
+            setHeaderHeight(headerRef.current.offsetHeight);
+        }
+    }, []); // Roda apenas uma vez quando o componente monta
 
     const menuItems = [
         { name: 'HOME', path: '/home' },
         { name: 'GEMAS PRECIOSAS', path: '/gemas-brilhantes' },
         { name: 'JOIAS', path: '/joias' },
+        { name: 'ATELIÊ DE JOIAS', path: '/personalizadas' },
         { name: 'GEMCASH', path: '/gemcash' },
     ];
 
@@ -24,14 +34,12 @@ const Header = () => {
     };
 
     return (
-        <header className="header-container">
+        // 4. Associe a referência ao elemento header
+        <header className="header-container" ref={headerRef}>
             <div className="header-top-row">
-                {/* --- LADO ESQUERDO --- */}
                 <div className="header-left">
                     <button className="platform-button">Conheça nossa plataforma</button>
                 </div>
-
-                {/* --- CENTRO --- */}
                 <div className="header-center">
                     <Link to="/home">
                         <img 
@@ -41,35 +49,32 @@ const Header = () => {
                         />
                     </Link>
                 </div>
-                
-                {/* --- LADO DIREITO --- */}
                 <div className="header-right">
-                    {/* Ícone de Carrinho que substituiu o botão */}
                     <Link to="/carrinho" className="cart-icon-link">
                         <i className="fas fa-shopping-cart"></i>
-                        {/* Exibe a contagem apenas se houver itens no carrinho */}
                         {totalItemsInCart > 0 && <span className="cart-badge">{totalItemsInCart}</span>}
                     </Link>
-                    {/* Botão Hambúrguer (para mobile) */}
                     <button className="hamburger-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
                     </button>
                 </div>
             </div>
-
-            {/* --- NAVEGAÇÃO DESKTOP --- */}
+            
             <nav className="header-nav-desktop">
                 <ul>
                     {menuItems.map(item => (
                         <li key={item.name}>
-                            <Link to={item.path}>{item.name}</Link>
+                            <NavLink to={item.path}>{item.name}</NavLink>
                         </li>
                     ))}
                 </ul>
             </nav>
 
-            {/* --- NAVEGAÇÃO MOBILE (OVERLAY) --- */}
-            <nav className={`mobile-nav-overlay ${isMenuOpen ? 'open' : ''}`}>
+            {/* 5. Passe a altura do header como uma style prop para o menu mobile */}
+            <nav 
+                className={`mobile-nav-overlay ${isMenuOpen ? 'open' : ''}`}
+                style={{ top: `${headerHeight}px`, height: `calc(100vh - ${headerHeight}px)` }}
+            >
                 <ul>
                     {menuItems.map(item => (
                         <li key={item.name}>

@@ -55,18 +55,20 @@ const BannerHome = ({ slides, speed, showArrows, width, height }) => {
                     <div className={`home-banner-slide ${index === currentIndex ? 'active' : ''}`} key={slide.id}>
                         {index === currentIndex && (
                             <>
-                                {/* Estrutura Lógica Corrigida */}
+                                {/* Lógica Condicional para Links */}
                                 
-                                {/* 1. Se NÃO houver overlay, a mídia inteira pode ser um link */}
-                                {!slide.overlay?.title && slide.link ? (
+                                {/* 1. Se o overlay está DESATIVADO e existe um link principal no slide... */}
+                                {(slide.overlay?.show === false && slide.link) ? (
+                                    // ... o slide inteiro se torna um link.
                                     <Link to={slide.link}>{renderSlideMedia(slide)}</Link>
                                 ) : (
-                                    // Caso contrário, a mídia é apenas visual
+                                    // Caso contrário, apenas renderiza a mídia como fundo.
                                     renderSlideMedia(slide)
                                 )}
                                 
-                                {/* 2. Se houver overlay, ele é renderizado separadamente, com seu próprio link no botão */}
-                                {slide.overlay?.title && (
+                                {/* 2. Se o overlay está ATIVADO e tem um título... */}
+                                {(slide.overlay?.show !== false && slide.overlay?.title) && (
+                                    // ... renderiza o conteúdo sobreposto.
                                     <div className="home-banner-overlay-content">
                                         <div className="home-banner-overlay-text-wrapper">
                                             <div className="home-banner-overlay-title-group">

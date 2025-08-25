@@ -1,0 +1,218 @@
+/* Dentro de src/Components/ClientView/Body/Personalizadas/Personalizadas.css */
+
+.personalizadas-page-wrapper {
+    background-color: #FFFFFF;
+    animation: fadeIn 0.5s ease-out; /* Adiciona uma animação suave à página */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.p-section-title {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: normal;
+    color: #122C4F;
+    margin-bottom: 50px;
+    font-family: 'Helnore', serif;
+    text-transform: uppercase;
+}
+
+/* --- Seção 1: Hero Banner --- */
+.p-hero-section {
+    height: 50vh;
+    /* A propriedade 'background-image' é controlada pelo JS agora */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.p-hero-title {
+    font-size: 4em;
+    font-weight: normal;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    font-family: 'Helnore', serif;
+    text-transform: uppercase;
+
+}
+
+.p-hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* --- Seção 2: Introdução ao Ateliê --- */
+.p-intro-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.p-intro-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+.p-intro-text:last-of-type {
+    margin-bottom: 0;
+}
+
+/* --- Seção 3: Grid de Benefícios --- */
+.p-benefits-section {
+    padding: 80px 40px;
+    background-color: #ffffff;
+}
+
+.p-benefits-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.p-benefit-card {
+    text-align: center;
+}
+
+.p-benefit-card i {
+    font-size: 2.5em;
+    color: #122C4F;
+    margin-bottom: 20px;
+}
+
+.p-benefit-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.p-benefit-card p {
+    font-family: 'Poppins', sans-serif;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* --- Seção 4: Citação de Impacto --- */
+.p-quote-section {
+    padding: 60px 40px;
+    background-color: #122C4F;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.p-quote-section p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Helnore', serif;
+    font-size: 1.8em;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* --- Seção 5: Como Funciona --- */
+.p-how-it-works-section {
+    padding: 80px 40px;
+}
+
+.p-steps-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.p-step {
+    text-align: center;
+    max-width: 250px;
+}
+
+.p-step span {
+    display: block;
+    margin: 0 auto 15px auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #122C4F;
+    color: #122C4F;
+    font-family: 'Helnore', serif;
+    font-size: 1.8em;
+    line-height: 48px;
+}
+
+.p-step p {
+    font-family: 'Poppins', sans-serif;
+    color: #555;
+}
+
+/* --- Seção 6: Formulário de Contato --- */
+.p-form-section {
+    padding: 80px 40px;
+    background-color: #ffffff;
+}
+
+.p-form-subtitle {
+    text-align: center;
+    max-width: 600px;
+    margin: -40px auto 40px auto;
+    font-family: 'Poppins', sans-serif;
+    color: #555;
+}
+
+.p-consult-form {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+}
+.p-consult-form input, .p-consult-form select, .p-consult-form textarea {
+    padding: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.p-submit-button {
+    background-color: #122C4F;
+    color: #FFFFFF;
+    border: none;
+    padding: 18px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.p-submit-button:hover {
+    background-color: #1a3c6d;
+}
+.p-form-footer-text {
+    text-align: center;
+    max-width: 600px;
+    margin: 25px auto 0 auto;
+    font-family: 'Poppins', sans-serif;
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    .p-benefits-grid { grid-template-columns: 1fr; }
+    .p-steps-container { flex-direction: column; align-items: center; }
+    .p-hero-title { font-size: 2.8em; }
+    .p-section-title { font-size: 2em; }
+}

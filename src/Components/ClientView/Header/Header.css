@@ -38,10 +38,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 20px; /* Espaço entre o carrinho e o botão hambúrguer */
+    gap: 20px;
 }
 
-.platform-button, .platform-button-desktop {
+.platform-button {
     background-color: #122C4F;
     color: #FFFFFF;
     border: none;
@@ -54,11 +54,10 @@
     transition: background-color 0.3s ease;
 }
 
-.platform-button:hover, .platform-button-desktop:hover {
+.platform-button:hover {
     background-color: #1a3c6d;
 }
 
-/* --- ESTILOS PARA O CARRINHO DE COMPRAS --- */
 .cart-icon-link {
     position: relative;
     color: #122C4F;
@@ -88,7 +87,6 @@
     font-weight: bold;
     border: 2px solid #FFFFFF;
 }
-
 
 /* --- Navegação de Desktop --- */
 .header-nav-desktop {
@@ -125,7 +123,8 @@
     transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.header-nav-desktop a:hover::after {
+.header-nav-desktop a:hover::after,
+.header-nav-desktop a.active::after {
     transform: scaleX(1);
 }
 
@@ -141,10 +140,9 @@
 
 .mobile-nav-overlay {
     position: fixed;
-    top: 80px;
+    /* As propriedades 'top' e 'height' foram removidas daqui */
     left: 0;
     width: 100%;
-    height: calc(100vh - 80px);
     background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
@@ -165,6 +163,7 @@
 .mobile-nav-overlay ul {
     list-style: none;
     text-align: center;
+    padding: 0; /* Remove padding padrão da lista */
 }
 
 .mobile-nav-overlay li {
@@ -200,14 +199,12 @@
         display: block;
     }
     .platform-button {
-        display: none; /* Esconde o botão da esquerda no mobile para dar mais espaço */
+        display: none;
     }
     .header-top-row {
         padding: 15px 20px;
     }
     .header-logo {
         height: 53px;
-        object-fit: contain;
-        display: block;
     }
 }

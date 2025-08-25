@@ -1,14 +1,19 @@
 // Dentro de src/Components/Admin/AdminBody/ManageHome/BannerEditor/BannerEditor.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../../../../firebase/config';
-import { v4 as uuidv4 } from 'uuid'; // Lembre-se de instalar com: npm install uuid
+import { v4 as uuidv4 } from 'uuid';
 import './BannerEditor.css';
 
 const BannerEditor = ({ initialData, onSave }) => {
     const [bannerData, setBannerData] = useState(initialData);
     const [isUploading, setIsUploading] = useState(false);
+
+    // Efeito para sincronizar o estado com as props quando elas mudam (ex: após salvar)
+    useEffect(() => {
+        setBannerData(initialData);
+    }, [initialData]);
 
     const handleConfigChange = (field, value) => {
         const newValue = typeof value === 'boolean' ? value : Number(value);
@@ -20,8 +25,15 @@ const BannerEditor = ({ initialData, onSave }) => {
             id: uuidv4(), 
             type: 'image', 
             src: '', 
-            link: '', 
-            overlay: { logoSrc: '', title: '', subtitle: '', buttonText: '', buttonLink: '' } 
+            link: '',
+            overlay: { 
+                show: true, // Por padrão, o novo slide vem com a opção de overlay ativada
+                logoSrc: '', 
+                title: '', 
+                subtitle: '', 
+                buttonText: '', 
+                buttonLink: '' 
+            } 
         };
         setBannerData(prev => ({ ...prev, slides: [...(prev.slides || []), newSlide] }));
     };
@@ -57,7 +69,7 @@ const BannerEditor = ({ initialData, onSave }) => {
             const snapshot = await uploadBytes(fileRef, file);
             const downloadURL = await getDownloadURL(snapshot.ref);
             const updatedSlides = [...bannerData.slides];
-            if (!updatedSlides[index].overlay) updatedSlides[index].overlay = {};
+            if (!updatedSlides[index].overlay) updatedSlides[index].overlay = { show: true };
             updatedSlides[index].overlay.logoSrc = downloadURL;
             setBannerData(prev => ({ ...prev, slides: updatedSlides }));
         } catch (error) {
@@ -70,8 +82,11 @@ const BannerEditor = ({ initialData, onSave }) => {
 
     const handleOverlayChange = (index, field, value) => {
         const updatedSlides = [...bannerData.slides];
-        if (!updatedSlides[index].overlay) updatedSlides[index].overlay = {};
-        updatedSlides[index].overlay[field] = value;
+        if (!updatedSlides[index].overlay) updatedSlides[index].overlay = { show: true };
+        
+        const newValue = field === 'show' ? value : value;
+        updatedSlides[index].overlay[field] = newValue;
+        
         setBannerData(prev => ({ ...prev, slides: updatedSlides }));
     };
 
@@ -82,8 +97,6 @@ const BannerEditor = ({ initialData, onSave }) => {
     };
 
     const handleSaveChanges = () => {
-        // A função onSave do componente pai (ManageHome) já lida com o salvamento no Firebase.
-        // Nós apenas passamos o estado local atualizado.
         onSave(bannerData);
     };
 
@@ -102,7 +115,7 @@ const BannerEditor = ({ initialData, onSave }) => {
                 </div>
                 <div className="control-group">
                     <label>Velocidade (ms)</label>
-                    <input type="number" value={bannerData.speed || '0'} onChange={(e) => handleConfigChange('speed', e.target.value)} step="0" />
+                    <input type="number" value={bannerData.speed || '5000'} onChange={(e) => handleConfigChange('speed', e.target.value)} step="500" />
                     <span>0 para desativar</span>
                 </div>
                 <div className="control-group checkbox">
@@ -126,26 +139,41 @@ const BannerEditor = ({ initialData, onSave }) => {
                                 <label htmlFor={`upload-${slide.id}`} className="upload-btn">
                                     <i className="fas fa-upload"></i> {isUploading ? 'Enviando...' : 'Mídia'}
                                 </label>
-                                <input type="text" value={slide.link || ''} onChange={(e) => handleSlideLinkChange(index, e.target.value)} placeholder="Link de redirecionamento"/>
+                                <input type="text" value={slide.link || ''} onChange={(e) => handleSlideLinkChange(index, e.target.value)} placeholder="Link de redirecionamento (só funciona se o overlay estiver desativado)"/>
                                 <button onClick={() => handleRemoveSlide(slide.id)} className="remove-btn">&times;</button>
                             </div>
                         </div>
                         <div className="slide-overlay-controls">
-                            <h5>Conteúdo Sobreposto (Opcional)</h5>
-                            <div className="logo-upload-group">
-                                <label htmlFor={`logo-upload-${slide.id}`}>Logo do Overlay</label>
-                                <div className="logo-uploader">
-                                    {slide.overlay?.logoSrc && <img src={slide.overlay.logoSrc} alt="Logo Preview" className="logo-preview"/>}
-                                    <input type="file" id={`logo-upload-${slide.id}`} className="hidden-file-input" onChange={(e) => handleOverlayLogoChange(index, e.target.files[0])} accept="image/*"/>
-                                    <label htmlFor={`logo-upload-${slide.id}`} className="upload-btn small">
-                                        <i className="fas fa-image"></i> {slide.overlay?.logoSrc ? 'Trocar' : 'Enviar'}
-                                    </label>
+                            <div className="overlay-header">
+                                <h5>Conteúdo Sobreposto (Opcional)</h5>
+                                <div className="control-group checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        id={`showOverlay-${slide.id}`} 
+                                        checked={slide.overlay?.show ?? true}
+                                        onChange={(e) => handleOverlayChange(index, 'show', e.target.checked)} 
+                                    />
+                                    <label htmlFor={`showOverlay-${slide.id}`}>Exibir</label>
                                 </div>
                             </div>
-                            <input type="text" value={slide.overlay?.title || ''} onChange={(e) => handleOverlayChange(index, 'title', e.target.value)} placeholder="Título (ex: GemCash)" />
-                            <input type="text" value={slide.overlay?.subtitle || ''} onChange={(e) => handleOverlayChange(index, 'subtitle', e.target.value)} placeholder="Subtítulo / Frase" />
-                            <input type="text" value={slide.overlay?.buttonText || ''} onChange={(e) => handleOverlayChange(index, 'buttonText', e.target.value)} placeholder="Texto do Botão" />
-                            <input type="text" value={slide.overlay?.buttonLink || ''} onChange={(e) => handleOverlayChange(index, 'buttonLink', e.target.value)} placeholder="Link do Botão (ex: /gemcash)" />
+                            {(slide.overlay?.show ?? true) && (
+                                <div className="overlay-fields">
+                                     <div className="logo-upload-group">
+                                        <label htmlFor={`logo-upload-${slide.id}`}>Logo do Overlay</label>
+                                        <div className="logo-uploader">
+                                            {slide.overlay?.logoSrc && <img src={slide.overlay.logoSrc} alt="Logo Preview" className="logo-preview"/>}
+                                            <input type="file" id={`logo-upload-${slide.id}`} className="hidden-file-input" onChange={(e) => handleOverlayLogoChange(index, e.target.files[0])} accept="image/*"/>
+                                            <label htmlFor={`logo-upload-${slide.id}`} className="upload-btn small">
+                                                <i className="fas fa-image"></i> {slide.overlay?.logoSrc ? 'Trocar' : 'Enviar'}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <input type="text" value={slide.overlay?.title || ''} onChange={(e) => handleOverlayChange(index, 'title', e.target.value)} placeholder="Título (ex: GemCash)" />
+                                    <input type="text" value={slide.overlay?.subtitle || ''} onChange={(e) => handleOverlayChange(index, 'subtitle', e.target.value)} placeholder="Subtítulo / Frase" />
+                                    <input type="text" value={slide.overlay?.buttonText || ''} onChange={(e) => handleOverlayChange(index, 'buttonText', e.target.value)} placeholder="Texto do Botão" />
+                                    <input type="text" value={slide.overlay?.buttonLink || ''} onChange={(e) => handleOverlayChange(index, 'buttonLink', e.target.value)} placeholder="Link do Botão (ex: /gemcash)" />
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
