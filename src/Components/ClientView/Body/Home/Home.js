@@ -97,7 +97,7 @@ const Home = () => {
                     title={features.joias.title}
                     text={features.joias.text}
                     buttonText={features.joias.buttonText}
-                    buttonLink="/joias"
+                    buttonLink="/personalizadas"
                     mediaSrc={features.joias.mediaSrc || "/img/Untitled design~3.mp4"}
                     mediaType={features.joias.mediaSrc ? features.joias.mediaType : 'video'}
                 />
