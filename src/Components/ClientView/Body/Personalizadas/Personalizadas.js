@@ -1,23 +1,25 @@
 // Dentro de src/Components/ClientView/Body/Personalizadas/Personalizadas.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import './Personalizadas.css';
 
-// Define o caminho para a imagem de fundo que está na pasta 'public'
-const heroBackgroundImage = "/img/5d79cfd0c0afa879c1f11b1c26ccb5ce.jpg";
+const heroBackgroundImage = '/img/5d79cfd0c0afa879c1f11b1c26ccb5ce.jpg';
 
 const Personalizadas = () => {
-    // Dados para os cards de benefícios para manter o JSX limpo e organizado
+    // Dados para a SEÇÃO DE BENEFÍCIOS, incluindo a mídia para cada item
     const benefits = [
-        { icon: 'fas fa-arrow-trend-up', title: 'Valorização do Capital', text: 'Ao encomendar uma jóia conosco, você tem acesso a materiais nobres com preços abaixo do mercado de grandes grifes, obtendo uma valorização imediata.' },
-        { icon: 'fas fa-shield-halved', title: 'Proteção Contra Crises', text: 'Enquanto ativos financeiros oscilam, o ouro e as pedras preciosas historicamente preservam seu valor, blindando seu capital.' },
-        { icon: 'fas fa-plane-departure', title: 'Mobilidade e Liquidez', text: 'Uma joia concentra grande valor em um objeto pequeno, fácil de transportar e negociar em diferentes mercados, sem burocracia.' },
-        { icon: 'fas fa-crown', title: 'Herança de Valor', text: 'Feita para durar gerações, sua joia se torna um legado que fortalece o patrimônio familiar e pode se tornar um ativo valioso em leilões futuros.' },
-        { icon: 'fas fa-gem', title: 'Controle de Materiais', text: 'Escolha metais nobres de maior pureza e pedras certificadas de alta qualidade, garantindo maior liquidez e reconhecimento no mercado.' },
-        { icon: 'fas fa-star', title: 'Exclusividade Incomparável', text: 'Tenha a certeza de possuir uma joia que é verdadeiramente sua, concebida para refletir sua essência e sem similar no mundo.' }
+        { icon: 'fas fa-arrow-trend-up', title: 'Valorização do Capital', text: 'Ao encomendar uma jóia conosco, você tem acesso a materiais nobres com preços abaixo do mercado de grandes grifes, obtendo uma valorização imediata.', mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' },
+        { icon: 'fas fa-shield-halved', title: 'Proteção Contra Crises', text: 'Enquanto ativos financeiros oscilam, o ouro e as pedras preciosas historicamente preservam seu valor, blindando seu capital.', mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' },
+        { icon: 'fas fa-plane-departure', title: 'Mobilidade e Liquidez', text: 'Uma joia concentra grande valor em um objeto pequeno, fácil de transportar e negociar em diferentes mercados, sem burocracia.', mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' },
+        { icon: 'fas fa-crown', title: 'Herança de Valor', text: 'Feita para durar gerações, sua joia se torna um legado que fortalece o patrimônio familiar e pode se tornar um ativo valioso em leilões futuros.', mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' },
+        { icon: 'fas fa-gem', title: 'Controle de Materiais', text: 'Escolha metais nobres de maior pureza e pedras certificadas de alta qualidade, garantindo maior liquidez e reconhecimento no mercado.', mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' },
+        { icon: 'fas fa-star', title: 'Exclusividade Incomparável', text: 'Tenha a certeza de possuir uma joia que é verdadeiramente sua, concebida para refletir sua essência e sem similar no mundo.', mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' }
     ];
 
-    // Cria o objeto de estilo que será aplicado ao 'section'
+    // Estado para controlar qual benefício está ativo
+    const [activeIndex, setActiveIndex] = useState(0);
+    const activeBenefit = benefits[activeIndex];
+
     const heroStyle = {
         backgroundImage: `linear-gradient(rgba(18, 44, 79, 0.5), rgba(18, 44, 79, 0.5)), url(${heroBackgroundImage})`
     };
@@ -43,34 +45,60 @@ const Personalizadas = () => {
                 </p>
             </section>
             
-            {/* --- Seção 3: Grid de Benefícios --- */}
+            {/* --- Seção 3: BENEFÍCIOS (LAYOUT DE 3 COLUNAS) --- */}
             <section className="p-benefits-section">
                 <h2 className="p-section-title fonte-principal">Os Benefícios de Ter Uma Joia Feita Sob Medida</h2>
-                <div className="p-benefits-grid">
-                    {benefits.map(benefit => (
-                        <div className="p-benefit-card" key={benefit.title}>
-                            <i className={benefit.icon}></i>
-                            <h3>{benefit.title}</h3>
-                            <p>{benefit.text}</p>
-                        </div>
-                    ))}
+                <div className="p-benefits-interactive-layout-v3">
+                    {/* Coluna 1: Display de Mídia */}
+                    <div className="p-benefit-media-card-v3">
+                        {activeBenefit.mediaType === 'video' ? (
+                            <video key={activeBenefit.mediaSrc} src={activeBenefit.mediaSrc} autoPlay muted loop playsInline />
+                        ) : (
+                            <img key={activeBenefit.mediaSrc} src={activeBenefit.mediaSrc} alt={activeBenefit.title} />
+                        )}
+                    </div>
+                    
+                    {/* Coluna 2: Lista de Navegação (Botões) */}
+                    <ul className="p-benefits-nav-list-v3">
+                        {benefits.map((benefit, index) => (
+                            <li 
+                                key={benefit.title}
+                                className={`p-benefit-nav-item ${activeIndex === index ? 'active' : ''}`}
+                                onClick={() => setActiveIndex(index)}
+                            >
+                                <i className={benefit.icon}></i>
+                                <span>{benefit.title}</span>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Coluna 3: Display de Texto */}
+                    <div className="p-benefit-text-content-v3" key={activeIndex}>
+                        <h3>{activeBenefit.title}</h3>
+                        <p>{activeBenefit.text}</p>
+                    </div>
                 </div>
             </section>
 
-            {/* --- Seção 4: Citação de Impacto --- */}
+            {/* --- Seção 4: Citação de Impacto com Imagem --- */}
             <section className="p-quote-section">
-                <p>
-                    "Uma joia feita sob medida é muito mais do que um símbolo de status: é uma estratégia de valorização e preservação do capital. Ao unir a beleza do design exclusivo com a solidez dos metais e pedras preciosas, você transforma luxo em investimento inteligente."
-                </p>
+                <div className="p-quote-content">
+                    <p>
+                        "Uma joia feita sob medida é muito mais do que um símbolo de status: é uma estratégia de valorização e preservação do capital. Ao unir a beleza do design exclusivo com a solidez dos metais e pedras preciosas, você transforma luxo em investimento inteligente."
+                    </p>
+                </div>
+                <div className="p-quote-image-wrapper">
+                    <img src="/img/1b44d2b73f9acece2634f26cd7ee202f.jpg" alt="Joia personalizada com design exclusivo" />
+                </div>
             </section>
 
             {/* --- Seção 5: Como Funciona --- */}
             <section className="p-how-it-works-section">
-                 <h2 className="p-section-title fonte-principal">Como Funciona Nossa Consultoria<br/> Personalizada</h2>
+                 <h2 className="p-section-title fonte-principal">Como Funciona Nossa Consultoria Personalizada</h2>
                  <div className="p-steps-container">
-                    <div className="p-step"><span>1</span><p>Preencha o formulário abaixo com seus dados de contato, informando a ocasião ou o objetivo da joia (como um presente de casamento, um marco pessoal, um elemento de patrimônio ou uso diário) e uma breve descrição da joia dos seus sonhos.</p></div>
-                    <div className="p-step"><span>2</span><p>Um de nossos consultores especializados entrará em contato com você via WhatsApp, em horário agendado, para oferecer uma consultoria personalizada e aprofundada.</p></div>
-                    <div className="p-step"><span>3</span><p>Juntos, vamos lapidar sua ideia e criar a joia perfeita, que atenda plenamente aos seus desejos e necessidades, com a garantia de excelência Gemas Brilhantes.</p></div>
+                    <div className="p-step"><span>1</span><p>Nos conte sua ideia preenchendo o formulário.</p></div>
+                    <div className="p-step"><span>2</span><p>Um de nossos consultores especializados entrará em contato.</p></div>
+                    <div className="p-step"><span>3</span><p>Juntos, vamos lapidar sua ideia e criar a joia perfeita.</p></div>
                  </div>
             </section>
 
@@ -82,7 +110,7 @@ const Personalizadas = () => {
                     <input type="text" placeholder="Nome Completo" required />
                     <input type="email" placeholder="E-mail" required />
                     <input type="tel" placeholder="Telefone / WhatsApp" required />
-                    <input type="text" placeholder="Ocasião / Objetivo da Joia..." required />
+                    <input type="tel" placeholder="Ocasião / Objetivo da Joia" required />
                     <textarea placeholder="Descreva a joia desejada (tipo, gemas, estilo, referências...)" rows="5" required></textarea>
                     <button type="submit" className="p-submit-button">Iniciar Consultoria Personalizada</button>
                 </form>
