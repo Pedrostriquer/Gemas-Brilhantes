@@ -10,13 +10,13 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 50px;
 }
 
 /* Coluna Esquerda: Texto Fixo */
 .intro-fixed-text-col {
     flex: 1;
-    max-width: 450px;
+    max-width: 560px;
 }
 
 .intro-title {
@@ -26,6 +26,7 @@
     color: #122C4F;
     line-height: 1.2;
     margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
 .intro-subtitle {

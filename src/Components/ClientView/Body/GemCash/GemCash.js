@@ -6,23 +6,22 @@ import { db } from '../../../../firebase/config';
 import IntroSection from './IntroSection/IntroSection';
 import ProblemSolution from './ProblemSolution/ProblemSolution';
 import HowItWorks from './HowItWorks/HowItWorks';
+import GemCashSimulator from './GemCashSimulator/GemCashSimulator'; // 1. Importa o novo componente
 
-// --- A CORREÇÃO COMEÇA AQUI ---
-// 1. Defina a mesma estrutura de dados padrão que temos no admin.
-// Isso garante que o componente saiba como os dados "deveriam" ser.
+// Estrutura de dados padrão para garantir que os componentes não quebrem
 const defaultGemCashData = {
     intro: { title: "", subtitle: "" },
     problemSolution: {
         mainTitle: "",
         subtitle: "",
         traditionalTitle: "",
-        traditionalPoints: [], // Garante que a propriedade .map sempre existirá
+        traditionalPoints: [],
         solutionTitle: "",
-        solutionPoints: []   // Garante que a propriedade .map sempre existirá
+        solutionPoints: []
     },
     howItWorks: {
         mainTitle: "",
-        details: [] // Garante que a propriedade .map sempre existirá
+        details: []
     }
 };
 
@@ -38,8 +37,7 @@ const GemCash = () => {
 
             if (docSnap.exists()) {
                 const firestoreData = docSnap.data();
-                // 2. Mescla os dados do Firestore com a estrutura padrão.
-                // Isso previne o erro 'cannot read properties of undefined'.
+                // Mescla os dados do Firestore com a estrutura padrão para robustez
                 setPageData({
                     intro: { ...defaultGemCashData.intro, ...firestoreData.intro },
                     problemSolution: { ...defaultGemCashData.problemSolution, ...firestoreData.problemSolution },
@@ -47,7 +45,7 @@ const GemCash = () => {
                 });
             } else {
                 console.log("Nenhum dado para a página GemCash encontrado! Usando estrutura vazia.");
-                setPageData(defaultGemCashData); // Usa a estrutura padrão se nada for encontrado
+                setPageData(defaultGemCashData);
             }
             setLoading(false);
         };
@@ -58,7 +56,6 @@ const GemCash = () => {
         return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Carregando...</div>;
     }
 
-    // Se não houver dados, renderiza uma mensagem amigável em vez de quebrar
     if (!pageData) {
         return <div>Nenhum conteúdo para esta página foi configurado ainda.</div>;
     }
@@ -66,8 +63,13 @@ const GemCash = () => {
     return (
         <>
             <IntroSection data={pageData.intro} />
+            
+            {/* 2. Adiciona a nova seção de simulação aqui */}
+
             <ProblemSolution data={pageData.problemSolution} />
             <HowItWorks data={pageData.howItWorks} />
+            <GemCashSimulator />
+
         </>
     );
 };
