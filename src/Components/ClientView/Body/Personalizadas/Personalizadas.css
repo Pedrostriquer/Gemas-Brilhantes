@@ -173,7 +173,7 @@
 .p-quote-content { flex: 1; padding: 20px 30px; text-align: center; }
 .p-quote-content p { max-width: 700px; margin: 0 auto; font-family: 'Helnore', serif; font-size: 1.61em; line-height: 1.6; opacity: 0.9; }
 .p-quote-image-wrapper { flex-basis: 35%; height: 300px; width: 300px; position: relative; }
-.p-quote-image-wrapper::before { content: ''; position: absolute; top: 0; left: -100px; width: 100px; height: 100%; background: linear-gradient(to right, #122c4fb9, transparent); z-index: 2; }
+/* .p-quote-image-wrapper::before { content: ''; position: absolute; top: 0; left: -100px; width: 100px; height: 100%; background: linear-gradient(to right, #122c4fb9, transparent); z-index: 2; } */
 .p-quote-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 .p-how-it-works-section { padding: 80px 40px; }
 .p-steps-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-around; gap: 20px; flex-wrap: wrap; }

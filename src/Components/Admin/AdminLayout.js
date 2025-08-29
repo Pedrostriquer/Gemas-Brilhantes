@@ -35,6 +35,10 @@ const AdminLayout = () => {
                         <i className="fas fa-home"></i>
                         <span>Gerenciar Home</span>
                     </NavLink>
+                    <NavLink to="/admin/personalizadas" className="nav-link">
+                        <i className="fas fa-paint-brush"></i>
+                        <span>Gerenciar Joias</span>
+                    </NavLink>
                     <NavLink to="/admin/gemcash" className="nav-link">
                         <i className="fas fa-gem"></i>
                         <span>Gerenciar GemCash</span>
