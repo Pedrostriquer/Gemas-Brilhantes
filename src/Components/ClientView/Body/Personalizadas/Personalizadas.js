@@ -31,7 +31,6 @@ const Personalizadas = () => {
         fetchData();
     }, []);
 
-    // A lista de benefícios agora é dinâmica, vinda do pageData, mas mantemos os ícones e mídias estáticos
     const benefitsDataFromAdmin = pageData?.benefits?.items || [];
     const staticBenefitMedia = [
         { mediaSrc: '/img/PinDown.io_@venicevibes_1756268271.mp4', mediaType: 'video' },
@@ -84,7 +83,6 @@ const Personalizadas = () => {
         return <div className="loading-message">Carregando...</div>;
     }
 
-    // Usamos textos de fallback para o caso de os dados ainda não terem sido criados no admin
     return (
         <div className="personalizadas-page-wrapper">
             <section className="p-hero-section" style={heroStyle}>
@@ -102,8 +100,10 @@ const Personalizadas = () => {
             
             <section className="p-benefits-section">
                 <h2 className="p-section-title fonte-principal">{pageData?.benefits?.title || "Benefícios de uma Joia Sob Medida"}</h2>
+                
+                {/* --- Layout para Desktop (será escondido no mobile) --- */}
                 {benefits.length > 0 && activeBenefit && (
-                  <div className="p-benefits-interactive-layout-v3">
+                  <div className="p-benefits-layout-desktop">
                       <div className="p-benefit-media-card-v3">
                           {activeBenefit.mediaType === 'video' ? (
                               <video key={activeBenefit.mediaSrc} src={activeBenefit.mediaSrc} autoPlay muted loop playsInline />
@@ -125,6 +125,22 @@ const Personalizadas = () => {
                       </div>
                   </div>
                 )}
+
+                {/* --- Layout de Acordeão para Mobile (será escondido no desktop) --- */}
+                <div className="p-benefits-layout-mobile">
+                    {benefits.map((benefit, index) => (
+                        <div className="accordion-item" key={benefit.id || index}>
+                            <button className={`accordion-header ${activeIndex === index ? 'active' : ''}`} onClick={() => setActiveIndex(activeIndex === index ? null : index)}>
+                                <i className={benefit.icon}></i>
+                                <span>{benefit.title}</span>
+                                <i className={`fas fa-chevron-down chevron-icon ${activeIndex === index ? 'open' : ''}`}></i>
+                            </button>
+                            <div className={`accordion-content ${activeIndex === index ? 'open' : ''}`}>
+                                <p>{benefit.text}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </section>
 
             <section className="p-quote-section">
